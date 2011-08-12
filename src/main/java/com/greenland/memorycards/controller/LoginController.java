@@ -37,8 +37,11 @@ public class LoginController implements Controller{
         String name = request.getParameter("email");
         String password = request.getParameter("password");
         
-        if (name.equals("John@mail.ru") && password.equals("12345678")) {
-            user.setUserName("John Travolta");
+        if (name.equals("dima_ir@mail.ru") && password.equals("12345678")) {
+            user.setUserName("Dima P :)");
+        } 
+        if (name.equals("elkrumina@gmail.com") && password.equals("12345678")) {
+            user.setUserName("Sonyshka :)");
         }
         
         return new ModelAndView("home", "user", user);

@@ -1,45 +1,25 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="css/fc_basic.css" />
-
-        <title>Flashcard Application</title>
-
-    </head>
-    <body>
-        <header>
-            <h1>Flashcard Application</h1>
-        </header>
-        <nav>
-            <ul>
-                <li><a href="#">Help</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
+<%@ include file="/WEB-INF/jsp/include.jsp" %>
 
         <div id="content">
             <div id="mainContent">
-                <section>
-                    Welcome to Flashcard Application designed and developed to ease studying.<br /> The hardest thing in the world! ...
-                </section>
+                <section><fmt:message key="welcomeMsg"/></section>
             </div>
             <aside>
                 <section id="loginForm">
                     <form action="login.do" method="get">
                         <table>
                             <tr>
-                                <td>E-mail: </td>
-                                <td><input type="email" name="email" size="25" required placeholder="Use only valid email" /></td>
+                                <td><fmt:message key="loginEmail"/></td>
+                                <td><input type="email" name="email" size="25" required placeholder="<fmt:message key="loginEmailPlaceholder"/>" /></td>
                             </tr>
                             <tr>
-                                <td>Password: </td>
-                                <td><input type="password" name="password" size="25" required placeholder="Password"/></td>
+                                <td><fmt:message key="loginPassword"/></td>
+                                <td><input type="password" name="password" size="25" required placeholder="<fmt:message key="loginPasswordPlaceholder"/>"/></td>
                             </tr>
                         </table>
 
-                        <p><input type="submit" name="submit" id="submit" value="Login"/>
-                            <input type="reset" name="reset" id="reset" value="Reset"/>
+                        <p><input type="submit" name="submit" id="submit" value="<fmt:message key="loginButtonLogin"/>"/>
+                            <input type="reset" name="reset" id="reset" value="<fmt:message key="loginButtonReset"/>"/>
                         </p>
                     </form>
                 </section>
@@ -47,7 +27,7 @@
         </div>
 
         <footer>
-            <p>All rights reserved</p>
+            <p><fmt:message key="AllRightsReserved"/></p>
         </footer>
     </body>
 </html>

@@ -16,6 +16,13 @@ public class User {
     private String userName;
     private String password;
     private List<String> cardList = new ArrayList<String>();
+    
+    public User() { }
+    
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
 
     public List<String> getCardList() {
         return cardList;
