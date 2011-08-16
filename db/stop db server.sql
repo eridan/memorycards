@@ -21,4 +21,4 @@
 --
 --Only an administrator may use the SHUTDOWN command.
 
-SHUTDOWN COMPACT
+SHUTDOWN
