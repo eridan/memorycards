@@ -7,6 +7,9 @@ package com.greenland.memorycards.controller;
 import com.greenland.memorycards.model.User;
 import junit.framework.Assert;
 import com.greenland.memorycards.controller.LoginController;
+import com.greenland.memorycards.repository.JdbcUserDao;
+import com.greenland.memorycards.service.UserManager;
+import com.greenland.memorycards.service.UserManagerImpl;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.junit.After;
@@ -23,11 +26,9 @@ import static org.junit.Assert.*;
  */
 public class LoginControllerTest {
     
-//    Mockery context = new JUnit4Mockery();
     private LoginController controller = new LoginController();
     private static MockHttpServletRequest request;
     private static MockHttpServletResponse response;
-    private User user;
 
     
     public LoginControllerTest() {
@@ -46,9 +47,9 @@ public class LoginControllerTest {
     public void setUp() {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        user = new User();
-        user.setUserName("testEmail");
-        user.setPassword("12345678");
+        UserManagerImpl um = new UserManagerImpl();
+        um.setUserDao(new JdbcUserDao());
+        controller.setUserManager(um);
     }
     
     @After
@@ -58,17 +59,16 @@ public class LoginControllerTest {
     @Test
     public void HomePage() throws Exception
     {
-        request.setMethod("GET");
-        request.addParameter("email", "testEmail");
-        request.addParameter("password", "12345678");
-        controller.setUser(user);
+        request.setMethod("POST");
+        request.addParameter("email", "test@mail.ru");
+        request.addParameter("password", "test");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("home", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
         User controllerUser = (User)mav.getModel().get("user");
         Assert.assertNotNull(controllerUser);
-        Assert.assertEquals("testEmail", controllerUser.getUserName());
-        Assert.assertEquals("12345678", controllerUser.getPassword());
+        Assert.assertEquals("test@mail.ru", controllerUser.getUserName());
+        Assert.assertEquals("test", controllerUser.getPassword());
     }
     
     

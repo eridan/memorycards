@@ -7,9 +7,8 @@ package com.greenland.memorycards.controller;
 
 import com.greenland.memorycards.model.User;
 
+import com.greenland.memorycards.service.UserManager;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,10 +23,10 @@ import org.springframework.web.servlet.mvc.Controller;
  */
 public class LoginController implements Controller{
     
-    private User user = new User();
+    private UserManager userManager;
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserManager(UserManager userManager) {
+        this.userManager = userManager;
     }
     
     protected final Log logger = LogFactory.getLog(getClass()); 
@@ -36,15 +35,10 @@ public class LoginController implements Controller{
         logger.info("Returning home page");
         String name = request.getParameter("email");
         String password = request.getParameter("password");
-        
-        if (name.equals("dima_ir@mail.ru") && password.equals("12345678")) {
-            user.setUserName("Dima P :)");
-        } 
-        if (name.equals("elkrumina@gmail.com") && password.equals("12345678")) {
-            user.setUserName("Sonyshka :)");
-        }
-        
-        return new ModelAndView("home", "user", user);
+        User appUser = new User();
+        appUser = userManager.getUser(name, password);
+                
+        return new ModelAndView("home", "user", appUser);
     }
     
 }

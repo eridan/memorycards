@@ -5,6 +5,7 @@
 package com.greenland.memorycards.service;
 
 import com.greenland.memorycards.model.User;
+import java.util.List;
 
 /**
  *
@@ -13,4 +14,5 @@ import com.greenland.memorycards.model.User;
 public interface UserManager {
     
     User getUser(String email, String password);
+    List<User> getAllUsers();
 }

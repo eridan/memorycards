@@ -124,7 +124,7 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>MemoryCards_v1.0</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
     </build>
 
 </project>
