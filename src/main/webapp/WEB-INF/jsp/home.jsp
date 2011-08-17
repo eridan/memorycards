@@ -7,18 +7,21 @@
 
 
 <div id="content">
-	<div id="mainContent">
-		<section>
-			<h1>Hello ${user.fName} ${user.lName}!</h1>
-		</section>
-		
-	</div>
+    <div id="mainContent">
+        <section>
+            <h1>Hello ${user.fName} ${user.lName}!</h1>
+        </section>
+        <section id="listCardGroups">
+            
+        </section>
+
+    </div>
 </div>
 
 <footer>
-	<p>
-		<fmt:message key="AllRightsReserved" />
-	</p>
+    <p>
+        <fmt:message key="AllRightsReserved" />
+    </p>
 </footer>
 </body>
 </html>

@@ -4,16 +4,20 @@
  */
 package com.greenland.memorycards.controller;
 
+import com.greenland.memorycards.model.Card;
+import com.greenland.memorycards.model.CardGroup;
+import com.greenland.memorycards.repository.CardDao;
 import org.jmock.Expectations;
 import com.greenland.memorycards.repository.UserDao;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.Mockery;
 import com.greenland.memorycards.model.User;
+import com.greenland.memorycards.service.CardManagerImpl;
 import junit.framework.Assert;
-import com.greenland.memorycards.controller.LoginController;
-import com.greenland.memorycards.repository.JdbcUserDao;
-import com.greenland.memorycards.service.UserManager;
 import com.greenland.memorycards.service.UserManagerImpl;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.junit.After;
@@ -22,7 +26,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -30,13 +33,16 @@ import static org.junit.Assert.*;
  */
 public class LoginControllerTest {
 
-    private Mockery context = new JUnit4Mockery();
+    private Mockery userDaoMock = new JUnit4Mockery();
+    private Mockery cardDaoMock = new JUnit4Mockery();
     //mock object : ContactDAO (using JMock)
-    UserDao userDao = context.mock(UserDao.class);
+    private UserDao userDao = userDaoMock.mock(UserDao.class);
+    private CardDao cardDao = cardDaoMock.mock(CardDao.class);
     private LoginController controller = new LoginController();
     private static MockHttpServletRequest request;
     private static MockHttpServletResponse response;
     private UserManagerImpl um = new UserManagerImpl();
+    private CardManagerImpl cm = new CardManagerImpl();
 
     public LoginControllerTest() {
     }
@@ -55,6 +61,7 @@ public class LoginControllerTest {
         response = new MockHttpServletResponse();
         um.setUserDao(userDao);
         controller.setUserManager(um);
+        controller.setCardManager(cm);
     }
 
     @After
@@ -64,7 +71,7 @@ public class LoginControllerTest {
     @Test
     public void validLoginControllerTest() throws Exception {
         // define expectations for mock object
-        context.checking(new Expectations() {
+        userDaoMock.checking(new Expectations() {
 
             {
                 User aUser = new User();
@@ -92,7 +99,7 @@ public class LoginControllerTest {
     @Test
     public void invalidLoginControllerTest() throws Exception {
         // define expectations for mock object
-        context.checking(new Expectations() {
+        userDaoMock.checking(new Expectations() {
 
             {
                 User aUser = new User();
@@ -100,6 +107,46 @@ public class LoginControllerTest {
                 aUser.setPassword("test");
                 oneOf(userDao).getUser("invalidUser@mail.ru", "invalid");
                 will(returnValue(null));
+            }
+        });
+
+        System.out.println("Testing with invalid data: user doesnt exist on the database");
+        request.setMethod("POST");
+        request.addParameter("email", "invalidUser@mail.ru");
+        request.addParameter("password", "invalid");
+        ModelAndView mav = controller.handleRequest(request, response);
+        Assert.assertEquals("home", mav.getViewName());
+        Assert.assertNotNull(mav.getModel());
+        User controllerUser = (User) mav.getModel().get("user");
+        Assert.assertNull(controllerUser);
+    }
+    
+    @Test
+    public void getUserCardsTest() throws Exception {
+        // define expectations for mock object
+        cardDaoMock.checking(new Expectations() {
+
+            {
+                Card card = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card1 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card2 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card3 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card4 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                List<Card> cardList = new ArrayList<Card>();
+                cardList.add(card);
+                cardList.add(card1);
+                cardList.add(card2);
+                cardList.add(card3);
+                cardList.add(card4);
+                CardGroup cardGroup = new CardGroup();
+                cardGroup.setCadList(cardList);
+                CardGroup cardGroup1 = new CardGroup();
+                cardGroup.setCadList(cardList);
+                List<CardGroup> cardGroups = new ArrayList<CardGroup>();
+                cardGroups.add(cardGroup);
+                cardGroups.add(cardGroup1);
+                oneOf(cardDao).getCardGroupsForUser("test@mail.ru");
+                will(returnValue(cardGroups));
             }
         });
 

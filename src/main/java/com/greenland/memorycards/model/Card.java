@@ -20,6 +20,17 @@ public class Card {
     private Date creationDate;
     private Date updateDate;
 
+    public Card(String question, String questionCode, String answer, String answerCode, Date creationDate, Date updateDate) {
+        this.question = question;
+        this.questionCode = questionCode;
+        this.answer = answer;
+        this.answerCode = answerCode;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+    }
+    
+    public Card() {}
+
     public String getAnswer() {
         return answer;
     }
