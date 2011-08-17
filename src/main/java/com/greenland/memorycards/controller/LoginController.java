@@ -35,8 +35,7 @@ public class LoginController implements Controller{
         logger.info("Returning home page");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        User appUser = new User();
-        appUser = userManager.getUser(email, password);
+        User appUser = userManager.getUser(email, password);
                 
         return new ModelAndView("home", "user", appUser);
     }

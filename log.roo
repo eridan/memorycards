@@ -1,0 +1,28 @@
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log opened at 2011-08-17 14:32:55
+download status
+download accept terms of use
+hint
+osgi obr url add --url http://spring-roo-repository.springsource.org/repository.xml
+osgi obr start --bundleSymbolicName org.springframework.roo.addon.cloud.foundry
+osgi obr url remove --url http://spring-roo-repository.springsource.org/repository.xml
+addon install id 01
+cloud foundry login
+pgp automatic trust
+cloud foundry login
+pgp automatic trust
+cloud foundry login
+cloud foundry login
+osgi obr url add --url http://spring-roo-repository.springsource.org/repository.xml
+osgi obr start --bundleSymbolicName org.springframework.roo.addon.cloud.foundry
+osgi obr url remove --url http://spring-roo-repository.springsource.org/repository.xml
+addon install bundle --bundleSymbolicName org.springframework.roo.addon.cloud.foundry
+cloud foundry login
+cloud foundry login --email --password
+cloud foundry login --email
+cloud foundry login --email jura_ir@mail.ru
+// [failed] cloud foundry login --email jura_ir@mail.ru --password 497icrjf
+// [failed] cloud foundry login --email jura_ir@mail.ru --password 497icrjf
+// [failed] cloud foundry login --email jura_ir@mail.ru --password 497icrjf
+// [failed] cloud foundry login --email jura_ir@mail.ru --password 497icrjf
+// [failed] cloud foundry login --email jura_ir@mail.ru --password 497icrjf
+// Spring Roo 1.1.5.RELEASE [rev d3a68c3] log closed at 2011-08-17 15:32:27
