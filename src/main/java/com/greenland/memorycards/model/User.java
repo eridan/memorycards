@@ -4,6 +4,7 @@
  */
 package com.greenland.memorycards.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,16 +12,18 @@ import java.util.List;
  *
  * @author jurijspe
  */
-public class User {
+public class User implements Serializable{
     private int id;
-    private String userName;
+    private String email;
     private String password;
+    private String fName;
+    private String lName;
     private List<String> cardList = new ArrayList<String>();
     
     public User() { }
     
-    public User(String userName, String password) {
-        this.userName = userName;
+    public User(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
@@ -48,12 +51,32 @@ public class User {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getfName() {
+        return fName;
+    }
+
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
+    
+    public String toString() {
+        return "User ("+ id +", " + email +", " + password +", " + fName +", " + lName +")";
     }
     
 }
