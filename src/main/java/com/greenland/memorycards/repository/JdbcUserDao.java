@@ -32,7 +32,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
                     "SELECT * FROM USERS "
                     + "WHERE email = '" + email + "' and password ='" + password + "'", new UserMapper());
         } catch (EmptyResultDataAccessException e) {
-            e.printStackTrace();
+            logger.error("User ("+ email +") not found exception");
             return null;
         }
         return dbUser;
