@@ -8,7 +8,7 @@
 
         <div id="content">
             <div id="mainContent">
-                <section><h1>Hello ${user.userName}!</h1></section>
+                <section><h1>Hello ${user.fname} ${user.lName}!</h1></section>
             </div>
             
         </div>

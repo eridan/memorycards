@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
 
@@ -25,16 +26,23 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
     @Override
     public User getUser(String email, String password) {
         logger.info("DB: Fetch user with email: " + email + " and password: " + password);
-        return (User) getSimpleJdbcTemplate().queryForObject(
-			"SELECT id, email, password FROM USERS " +
-			"WHERE email = '" + email + "' and password ='" + password + "'", new UserMapper());
+        User dbUser = new User();
+        try {
+            dbUser = (User) getSimpleJdbcTemplate().queryForObject(
+                    "SELECT * FROM USERS "
+                    + "WHERE email = '" + email + "' and password ='" + password + "'", new UserMapper());
+        } catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return dbUser;
     }
 
     @Override
     public List<User> getAllUsers() {
         logger.info("DB: Fetch All Users");
         List<User> allUsers = getSimpleJdbcTemplate().query(
-                "select id, email, password from USERS",
+                "select * from USERS",
                 new UserMapper());
         return allUsers;
     }
@@ -44,8 +52,10 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
             user.setId(rs.getInt("id"));
-            user.setUserName(rs.getString("email"));
+            user.setEmail(rs.getString("email"));
             user.setPassword(rs.getString("password"));
+            user.setfName(rs.getString("fName"));
+            user.setlName(rs.getString("lName"));
             return user;
         }
     }

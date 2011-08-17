@@ -33,10 +33,10 @@ public class LoginController implements Controller{
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         logger.info("Returning home page");
-        String name = request.getParameter("email");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         User appUser = new User();
-        appUser = userManager.getUser(name, password);
+        appUser = userManager.getUser(email, password);
                 
         return new ModelAndView("home", "user", appUser);
     }
