@@ -7,8 +7,7 @@ package com.greenland.memorycards.controller;
 
 import com.greenland.memorycards.model.User;
 
-import com.greenland.memorycards.service.CardManager;
-import com.greenland.memorycards.service.CardManagerImpl;
+import com.greenland.memorycards.service.CardGroupManager;
 import com.greenland.memorycards.service.UserManager;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -26,14 +25,9 @@ import org.springframework.web.servlet.mvc.Controller;
 public class LoginController implements Controller{
     
     private UserManager userManager;
-    private CardManager cardManager;
 
     public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
-    }
-
-    public void setCardManager(CardManager cardManager) {
-        this.cardManager = cardManager;
     }
     
     protected final Log logger = LogFactory.getLog(getClass()); 
@@ -43,7 +37,6 @@ public class LoginController implements Controller{
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         User appUser = userManager.getUser(email, password);
-                
         return new ModelAndView("home", "user", appUser);
     }
     

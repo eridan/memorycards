@@ -18,21 +18,13 @@ public class User implements Serializable{
     private String password;
     private String fName;
     private String lName;
-    private List<String> cardList = new ArrayList<String>();
+    private List<CardGroup> cardGroups = new ArrayList<CardGroup>();
     
     public User() { }
     
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-    }
-
-    public List<String> getCardList() {
-        return cardList;
-    }
-
-    public void setCardList(List<String> cardList) {
-        this.cardList = cardList;
     }
 
     public int getId() {
@@ -73,6 +65,14 @@ public class User implements Serializable{
 
     public void setlName(String lName) {
         this.lName = lName;
+    }
+
+    public List<CardGroup> getCardGroups() {
+        return cardGroups;
+    }
+
+    public void setCardGroups(List<CardGroup> cardGroups) {
+        this.cardGroups = cardGroups;
     }
     
     public String toString() {

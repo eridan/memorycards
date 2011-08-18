@@ -21,11 +21,5 @@ public class JdbcCardDao extends SimpleJdbcDaoSupport implements CardDao{
         List<Card> cardList = new ArrayList<Card>();
         return cardList;
     }
-
-    @Override
-    public List<CardGroup> getCardGroupsForUser(String email) {
-        List<CardGroup> cardGroupList = new ArrayList<CardGroup>();
-        return cardGroupList;
-    }
     
 }

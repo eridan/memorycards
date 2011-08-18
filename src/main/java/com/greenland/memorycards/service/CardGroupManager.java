@@ -4,7 +4,6 @@
  */
 package com.greenland.memorycards.service;
 
-import com.greenland.memorycards.model.Card;
 import com.greenland.memorycards.model.CardGroup;
 import java.util.List;
 
@@ -12,8 +11,7 @@ import java.util.List;
  *
  * @author jurijspe
  */
-public interface CardManager {
+public interface CardGroupManager {
     
-    List<Card> getCardListForUser (String email);
-    
+    List<CardGroup> getCardGroupsForUser (String email);    
 }

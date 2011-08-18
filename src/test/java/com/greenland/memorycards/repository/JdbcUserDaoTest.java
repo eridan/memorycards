@@ -54,11 +54,12 @@ public class JdbcUserDaoTest extends AbstractTransactionalDataSourceSpringContex
     @Test
     public void testGetUser() {
         System.out.println("Test user who exists on the db");
-        String email = "dima_ir@mail.ru";
-        String password = "12345678";
-        User result = userDao.getUser(email, password);
-        String expResult = "12345678";
-        assertEquals(expResult, result.getPassword());
+        String email = "test@mail.ru";
+        String password = "test";
+        User dbUser = userDao.getUser(email, password);
+        String expPassword = "test";
+        assertEquals(expPassword, dbUser.getPassword());
+        assertEquals(2, dbUser.getCardGroups().size());
     }
     
     @Test

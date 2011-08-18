@@ -15,6 +15,8 @@ import java.util.List;
 public class CardGroup implements Serializable{
     
     private int id;
+    private String groupName;
+    private String description;
     private List<Card> cadList;
     private Date creationDate;
     private Date updateDate;
@@ -49,6 +51,22 @@ public class CardGroup implements Serializable{
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
     
 }

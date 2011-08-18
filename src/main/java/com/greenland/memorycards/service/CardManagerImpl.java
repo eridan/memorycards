@@ -25,10 +25,5 @@ public class CardManagerImpl implements CardManager{
     public List<Card> getCardListForUser(String email) {
         return cardDao.getCardListForUser(email);
     }
-
-    @Override
-    public List<CardGroup> getCardGroupsForUser(String email) {
-        return cardDao.getCardGroupsForUser(email);
-    }
     
 }
