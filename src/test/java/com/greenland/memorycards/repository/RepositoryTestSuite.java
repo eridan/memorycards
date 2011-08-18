@@ -16,7 +16,9 @@ import org.junit.runners.Suite;
  * @author jurijspe
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({com.greenland.memorycards.repository.JdbcUserDaoTest.class})
+@Suite.SuiteClasses({
+    com.greenland.memorycards.repository.JdbcUserDaoTest.class,
+    com.greenland.memorycards.repository.JdbcCardGroupDaoTest.class})
 public class RepositoryTestSuite {
 
     @BeforeClass
@@ -34,5 +36,4 @@ public class RepositoryTestSuite {
     @After
     public void tearDown() throws Exception {
     }
-    
 }

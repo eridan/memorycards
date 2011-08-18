@@ -16,8 +16,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    com.greenland.memorycards.controller.LoginControllerTest.class, 
-    com.greenland.memorycards.repository.JdbcUserDaoTest.class})
+    com.greenland.memorycards.controller.ControllerTestSuite.class, 
+    com.greenland.memorycards.repository.RepositoryTestSuite.class})
 public class MemoryCardsTestSuite {
 
     @BeforeClass

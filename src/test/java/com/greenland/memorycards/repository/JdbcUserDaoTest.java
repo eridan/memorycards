@@ -42,8 +42,8 @@ public class JdbcUserDaoTest extends AbstractTransactionalDataSourceSpringContex
 
     @Override
     protected void onSetUpInTransaction() throws Exception {
-        super.deleteFromTables(new String[] {"users"});
-        super.executeSqlScript("file:db/load_users.sql", true);
+//        super.deleteFromTables(new String[] {"users"});
+//        super.executeSqlScript("file:db/load_users.sql", true);
     }
     
     
@@ -59,7 +59,6 @@ public class JdbcUserDaoTest extends AbstractTransactionalDataSourceSpringContex
         User dbUser = userDao.getUser(email, password);
         String expPassword = "test";
         assertEquals(expPassword, dbUser.getPassword());
-        assertEquals(2, dbUser.getCardGroups().size());
     }
     
     @Test
