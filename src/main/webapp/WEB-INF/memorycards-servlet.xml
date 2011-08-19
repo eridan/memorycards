@@ -30,18 +30,27 @@
     
     <bean id="userManager" class="com.greenland.memorycards.service.UserManagerImpl">
         <property name="userDao" ref="userDao" />
-    </bean>
+        <property name="cardGroupManager" ref="cardGroupManager" />
+        </bean>
     
-    <bean id="userDao" class="com.greenland.memorycards.repository.JdbcUserDao">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
+        <bean id="cardGroupManager" class="com.greenland.memorycards.service.CardGroupManagerImpl">
+            <property name="cardGroupDao" ref="cardGroupDao" />
+        </bean>
+            
+        <bean id="cardGroupDao" class="com.greenland.memorycards.repository.JdbcCardGroupDao">
+            <property name="dataSource" ref="dataSource" />    
+        </bean>
     
-    <bean id="viewResolver"
+        <bean id="userDao" class="com.greenland.memorycards.repository.JdbcUserDao">
+            <property name="dataSource" ref="dataSource" />
+        </bean>
+    
+        <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
           
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
+        <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
 		p:basename="messages_en" />
     
    
@@ -55,8 +64,8 @@
     <!--
     The index controller.
     -->
-    <bean name="indexController"
+        <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
     
-</beans>
+    </beans>

@@ -7,12 +7,11 @@ package com.greenland.memorycards.controller;
 import com.greenland.memorycards.model.Card;
 import com.greenland.memorycards.model.CardGroup;
 import org.jmock.Expectations;
-import com.greenland.memorycards.repository.UserDao;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.Mockery;
 import com.greenland.memorycards.model.User;
-import com.greenland.memorycards.repository.CardGroupDao;
 import com.greenland.memorycards.service.CardGroupManagerImpl;
+import com.greenland.memorycards.service.UserManager;
 import junit.framework.Assert;
 import com.greenland.memorycards.service.UserManagerImpl;
 import java.util.ArrayList;
@@ -33,16 +32,11 @@ import org.springframework.web.servlet.ModelAndView;
  */
 public class LoginControllerTest {
 
-    private Mockery userDaoMock = new JUnit4Mockery();
-    private Mockery cardGroupDaoMock = new JUnit4Mockery();
+    private Mockery userManagerMock = new JUnit4Mockery();
     
     //mock object : ContactDAO (using JMock)
-    private UserDao userDao = userDaoMock.mock(UserDao.class);
-    private CardGroupDao cardGroupDao = cardGroupDaoMock.mock(CardGroupDao.class);
-    
+    private UserManager userManager = userManagerMock.mock(UserManager.class);
     private LoginController controller = new LoginController();
-    private UserManagerImpl um = new UserManagerImpl();
-    private CardGroupManagerImpl cgm = new CardGroupManagerImpl();
     private static MockHttpServletRequest request;
     private static MockHttpServletResponse response;
 
@@ -61,10 +55,7 @@ public class LoginControllerTest {
     public void setUp() {
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        um.setUserDao(userDao);
-        cgm.setCardGroupDao(cardGroupDao);
-        um.setCardGroupManager(cgm);
-        controller.setUserManager(um);
+        controller.setUserManager(userManager);
     }
 
     @After
@@ -74,62 +65,12 @@ public class LoginControllerTest {
     @Test
     public void validLoginControllerTest() throws Exception {
         // define expectations for mock object
-        userDaoMock.checking(new Expectations() {
+        userManagerMock.checking(new Expectations() {
 
             {
                 User aUser = new User();
                 aUser.setEmail("test@mail.ru");
                 aUser.setPassword("test");
-                oneOf(userDao).getUser("test@mail.ru", "test");
-                will(returnValue(aUser));
-            }
-        });
-
-        System.out.println("Testing with valid data: user exists on the database");
-        request.setMethod("POST");
-        request.addParameter("email", "test@mail.ru");
-        request.addParameter("password", "test");
-        ModelAndView mav = controller.handleRequest(request, response);
-        Assert.assertEquals("home", mav.getViewName());
-        Assert.assertNotNull(mav.getModel());
-        User controllerUser = (User) mav.getModel().get("user");
-        Assert.assertNotNull(controllerUser);
-        System.out.println(controllerUser);
-        Assert.assertEquals("test@mail.ru", controllerUser.getEmail());
-        Assert.assertEquals("test", controllerUser.getPassword());
-    }
-    
-    @Test
-    public void invalidLoginControllerTest() throws Exception {
-        // define expectations for mock object
-        userDaoMock.checking(new Expectations() {
-
-            {
-                User aUser = new User();
-                aUser.setEmail("test@mail.ru");
-                aUser.setPassword("test");
-                oneOf(userDao).getUser("invalidUser@mail.ru", "invalid");
-                will(returnValue(null));
-            }
-        });
-
-        System.out.println("Testing with invalid data: user doesnt exist on the database");
-        request.setMethod("POST");
-        request.addParameter("email", "invalidUser@mail.ru");
-        request.addParameter("password", "invalid");
-        ModelAndView mav = controller.handleRequest(request, response);
-        Assert.assertEquals("home", mav.getViewName());
-        Assert.assertNotNull(mav.getModel());
-        User controllerUser = (User) mav.getModel().get("user");
-        Assert.assertNull(controllerUser);
-    }
-    
-    @Test
-    public void getUserCardsTest() throws Exception {
-        // define expectations for mock object
-        cardGroupDaoMock.checking(new Expectations() {
-
-            {
                 Card card = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
                 Card card1 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
                 Card card2 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
@@ -148,17 +89,13 @@ public class LoginControllerTest {
                 List<CardGroup> cardGroups = new ArrayList<CardGroup>();
                 cardGroups.add(cardGroup);
                 cardGroups.add(cardGroup1);
-                oneOf(cardGroupDao).getCardGroupsForUser("test@mail.ru");
-                will(returnValue(cardGroups));
+                aUser.setCardGroups(cardGroups);
+                oneOf(userManager).getUser("test@mail.ru", "test");
+                will(returnValue(aUser));
             }
         });
-        
-        um.setUserDao(userDao);
-        cgm.setCardGroupDao(cardGroupDao);
-        um.setCardGroupManager(cgm);
-        controller.setUserManager(um);
 
-        System.out.println("Testing User Groups");
+        System.out.println("Testing with valid data: user exists on the database");
         request.setMethod("POST");
         request.addParameter("email", "test@mail.ru");
         request.addParameter("password", "test");
@@ -166,10 +103,36 @@ public class LoginControllerTest {
         Assert.assertEquals("home", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
         User controllerUser = (User) mav.getModel().get("user");
+        Assert.assertNotNull(controllerUser);
         System.out.println(controllerUser);
         Assert.assertEquals("test@mail.ru", controllerUser.getEmail());
         Assert.assertEquals("test", controllerUser.getPassword());
-        Assert.assertEquals(2, controllerUser.getCardGroups());
+        Assert.assertEquals(2, controllerUser.getCardGroups().size());
         Assert.assertEquals(5, controllerUser.getCardGroups().get(0).getCadList().size());
+    }
+    
+    @Test
+    public void invalidLoginControllerTest() throws Exception {
+        // define expectations for mock object
+        userManagerMock.checking(new Expectations() {
+
+            {
+                User aUser = new User();
+                aUser.setEmail("test@mail.ru");
+                aUser.setPassword("test");
+                oneOf(userManager).getUser("invalidUser@mail.ru", "invalid");
+                will(returnValue(null));
+            }
+        });
+
+        System.out.println("Testing with invalid data: user doesnt exist on the database");
+        request.setMethod("POST");
+        request.addParameter("email", "invalidUser@mail.ru");
+        request.addParameter("password", "invalid");
+        ModelAndView mav = controller.handleRequest(request, response);
+        Assert.assertEquals("home", mav.getViewName());
+        Assert.assertNotNull(mav.getModel());
+        User controllerUser = (User) mav.getModel().get("user");
+        Assert.assertNull(controllerUser);
     }
 }

@@ -11,10 +11,24 @@
         <section>
             <h1>Hello ${user.fName} ${user.lName}!</h1>
         </section>
-        <section id="listCardGroups">
-            
-        </section>
-
+        <aside>
+            <section id="listCardGroups">
+                <c:forEach items="${user.cardGroups}" var="group">
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="#">${group.groupName}</a>
+                            </td>
+                            <td><a href="#">Delete</a><&nbsp;><a href="#">Update</a><&nbsp;><a href="#">Create</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>${group.groupName}</td>
+                        </tr>
+                    </table>
+                </c:forEach>
+            </section>
+        </aside>
     </div>
 </div>
 

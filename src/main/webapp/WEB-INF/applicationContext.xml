@@ -10,17 +10,17 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		p:location="/WEB-INF/classes/jdbc.properties" />
 
-	<!-- bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" 
+	 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" 
 		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}" p:username="${jdbc.username}" 
-		p:password="${jdbc.password}" / -->
+		p:password="${jdbc.password}" /> 
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+<!--	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
 		p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
 
 	<jdbc:initialize-database data-source="dataSource">
 		<jdbc:script location="classpath:db-schema.sql" />
-	</jdbc:initialize-database>
+	</jdbc:initialize-database>-->
 
 	<!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
 

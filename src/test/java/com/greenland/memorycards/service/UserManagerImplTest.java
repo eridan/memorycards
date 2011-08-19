@@ -110,7 +110,6 @@ public class UserManagerImplTest {
             }
         });
         List<User> users = um.getAllUsers();
-        int expResult = 1;
-        assertEquals(expResult, users.size());
+        assertEquals(1, users.size());
     }
 }
