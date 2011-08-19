@@ -10,10 +10,8 @@ import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.Mockery;
 import com.greenland.memorycards.model.User;
-import com.greenland.memorycards.service.CardGroupManagerImpl;
 import com.greenland.memorycards.service.UserManager;
 import junit.framework.Assert;
-import com.greenland.memorycards.service.UserManagerImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,9 +81,9 @@ public class LoginControllerTest {
                 cardList.add(card3);
                 cardList.add(card4);
                 CardGroup cardGroup = new CardGroup();
-                cardGroup.setCadList(cardList);
+                cardGroup.setCardList(cardList);
                 CardGroup cardGroup1 = new CardGroup();
-                cardGroup1.setCadList(cardList);
+                cardGroup1.setCardList(cardList);
                 List<CardGroup> cardGroups = new ArrayList<CardGroup>();
                 cardGroups.add(cardGroup);
                 cardGroups.add(cardGroup1);
@@ -108,7 +106,7 @@ public class LoginControllerTest {
         Assert.assertEquals("test@mail.ru", controllerUser.getEmail());
         Assert.assertEquals("test", controllerUser.getPassword());
         Assert.assertEquals(2, controllerUser.getCardGroups().size());
-        Assert.assertEquals(5, controllerUser.getCardGroups().get(0).getCadList().size());
+        Assert.assertEquals(5, controllerUser.getCardGroups().get(0).getCardList().size());
     }
     
     @Test

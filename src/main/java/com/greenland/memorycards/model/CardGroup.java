@@ -17,16 +17,16 @@ public class CardGroup implements Serializable{
     private int id;
     private String groupName;
     private String description;
-    private List<Card> cadList;
+    private List<Card> cardList;
     private Date creationDate;
     private Date updateDate;
 
-    public List<Card> getCadList() {
-        return cadList;
+    public List<Card> getCardList() {
+        return cardList;
     }
 
-    public void setCadList(List<Card> cadList) {
-        this.cadList = cadList;
+    public void setCardList(List<Card> cardList) {
+        this.cardList = cardList;
     }
 
     public Date getCreationDate() {

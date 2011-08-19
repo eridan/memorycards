@@ -6,7 +6,10 @@ package com.greenland.memorycards.service;
 
 import com.greenland.memorycards.model.CardGroup;
 import com.greenland.memorycards.repository.CardGroupDao;
+import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -14,15 +17,31 @@ import java.util.List;
  */
 public class CardGroupManagerImpl implements CardGroupManager{
     
+    /** Logger for this class and subclasses */
+    protected final Log logger = LogFactory.getLog(getClass());
+    
     private CardGroupDao cardGroupDao;
 
     public void setCardGroupDao(CardGroupDao cardGroupDao) {
         this.cardGroupDao = cardGroupDao;
     }
+    
+    private CardManager cardManager;
+
+    public void setCardManager(CardManager cardManager) {
+        this.cardManager = cardManager;
+    }
 
     @Override
     public List<CardGroup> getCardGroupsForUser(String email) {
-        return cardGroupDao.getCardGroupsForUser(email);
+        logger.info("Getting user groups");
+        List<CardGroup> cardGroups = new ArrayList<CardGroup>();
+        cardGroups = cardGroupDao.getCardGroupsForUser(email);
+        logger.info("Populating groups with cards");
+        for (CardGroup cardGroup : cardGroups) {
+            cardGroup.setCardList(cardManager.getAllCardsForGroup(cardGroup.getId()));
+        }
+        return cardGroups;
     }
     
 }

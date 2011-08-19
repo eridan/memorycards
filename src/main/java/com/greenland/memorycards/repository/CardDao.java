@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface CardDao {
     
-    List<Card> getCardListForUser(String email);
+    public List<Card> getAllCardsForGroup(int id);
     
 }

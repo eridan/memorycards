@@ -35,10 +35,19 @@
     
         <bean id="cardGroupManager" class="com.greenland.memorycards.service.CardGroupManagerImpl">
             <property name="cardGroupDao" ref="cardGroupDao" />
+            <property name="cardManager" ref="cardManager" />
         </bean>
             
         <bean id="cardGroupDao" class="com.greenland.memorycards.repository.JdbcCardGroupDao">
             <property name="dataSource" ref="dataSource" />    
+        </bean>
+        
+        <bean id="cardManager" class="com.greenland.memorycards.service.CardManagerImpl">
+            <property name="cardDao" ref="cardDao" />    
+        </bean>
+        
+        <bean id="cardDao" class="com.greenland.memorycards.repository.JdbcCardDao">
+            <property name="dataSource" ref="dataSource" />
         </bean>
     
         <bean id="userDao" class="com.greenland.memorycards.repository.JdbcUserDao">

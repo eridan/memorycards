@@ -7,7 +7,6 @@ package com.greenland.memorycards.controller;
 
 import com.greenland.memorycards.model.User;
 
-import com.greenland.memorycards.service.CardGroupManager;
 import com.greenland.memorycards.service.UserManager;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -37,6 +36,7 @@ public class LoginController implements Controller{
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         User appUser = userManager.getUser(email, password);
+        request.getSession().setAttribute("user", appUser);
         return new ModelAndView("home", "user", appUser);
     }
     

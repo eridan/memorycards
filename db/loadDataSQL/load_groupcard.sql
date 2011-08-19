@@ -1,0 +1,15 @@
+INSERT INTO GROUPCARD (groupId, cardId) values(1, 1);
+INSERT INTO GROUPCARD (groupId, cardId) values(1, 2);
+INSERT INTO GROUPCARD (groupId, cardId) values(1, 3);
+INSERT INTO GROUPCARD (groupId, cardId) values(1, 4);
+INSERT INTO GROUPCARD (groupId, cardId) values(1, 5);
+INSERT INTO GROUPCARD (groupId, cardId) values(1, 6);
+INSERT INTO GROUPCARD (groupId, cardId) values(1, 7);
+INSERT INTO GROUPCARD (groupId, cardId) values(2, 1);
+INSERT INTO GROUPCARD (groupId, cardId) values(2, 2);
+INSERT INTO GROUPCARD (groupId, cardId) values(2, 3);
+INSERT INTO GROUPCARD (groupId, cardId) values(3, 2);
+INSERT INTO GROUPCARD (groupId, cardId) values(3, 1);
+INSERT INTO GROUPCARD (groupId, cardId) values(3, 4);
+INSERT INTO GROUPCARD (groupId, cardId) values(3, 5);
+INSERT INTO GROUPCARD (groupId, cardId) values(3, 7);

@@ -5,15 +5,19 @@
 package com.greenland.memorycards.service;
 
 import com.greenland.memorycards.model.Card;
-import com.greenland.memorycards.model.CardGroup;
 import com.greenland.memorycards.repository.CardDao;
 import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
  * @author jurijspe
  */
 public class CardManagerImpl implements CardManager{
+    
+    /** Logger for this class and subclasses */
+    protected final Log logger = LogFactory.getLog(getClass());
     
     private CardDao cardDao;
 
@@ -22,8 +26,9 @@ public class CardManagerImpl implements CardManager{
     }
 
     @Override
-    public List<Card> getCardListForUser(String email) {
-        return cardDao.getCardListForUser(email);
+    public List<Card> getAllCardsForGroup(int id) {
+        logger.info("Getting cards for group id: "+id);
+        return cardDao.getAllCardsForGroup(id);
     }
     
 }
