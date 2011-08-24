@@ -18,7 +18,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     com.greenland.memorycards.repository.JdbcUserDaoTest.class,
-    com.greenland.memorycards.repository.JdbcCardGroupDaoTest.class})
+    com.greenland.memorycards.repository.JdbcCardGroupDaoTest.class,
+    com.greenland.memorycards.repository.JdbcCardDaoTest.class})
 public class RepositoryTestSuite {
 
     @BeforeClass

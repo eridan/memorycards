@@ -10,7 +10,6 @@ import java.util.List;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -32,11 +31,11 @@ public class JdbcCardGroupDaoTest extends AbstractTransactionalDataSourceSpringC
         this.cardGroupDao = cardGroupDao;
     }
     
-    @Override
-    protected void onSetUpInTransaction() throws Exception {
-//        super.deleteFromTables(new String[] {"users"});
-//        super.executeSqlScript("file:db/load_users.sql", true);
-    }
+//    @Override
+//    protected void onSetUpInTransaction() throws Exception {
+////        super.deleteFromTables(new String[] {"users"});
+////        super.executeSqlScript("file:db/load_users.sql", true);
+//    }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
