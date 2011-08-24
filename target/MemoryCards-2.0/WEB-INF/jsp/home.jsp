@@ -10,12 +10,36 @@
     <div id="mainContent">
         <section>
             <h1>Hello ${user.fName} ${user.lName}!</h1>
+            <c:forEach items="${user.cardGroups}" var="group">
+                <c:forEach items="${group.cardList}" var="card">
+                    <table>
+                        <tr>
+                            <td>${card.question}<p>${card.questionCode}</p></td>
+                            <td>${card.answer}<p>${card.answerCode}</p></td>
+                        </tr>
+                    </table>
+                </c:forEach>
+            </c:forEach>
         </section>
-        <section id="listCardGroups">
-            
-        </section>
-
     </div>
+    <aside>
+        <section id="listCardGroups">
+            <c:forEach items="${user.cardGroups}" var="group">
+                <table>
+                    <tr>
+                        <td>
+                            <a href="#">${group.groupName}</a>
+                        </td>
+                        <td><a href="#">Delete</a>&nbsp;<a href="#">Update</a>&nbsp;<a href="#">Create</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>${group.groupName}</td>
+                    </tr>
+                </table>
+            </c:forEach>
+        </section>
+    </aside>
 </div>
 
 <footer>

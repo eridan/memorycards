@@ -97,7 +97,7 @@ p {
     padding-bottom: 22px;
 }
 
-#loginForm {
+#loginForm, #listCardGroups {
     border:1px solid #93CE37;
     border-bottom:3px solid #9ED929;
     background-color:#9DD929;
