@@ -4,13 +4,14 @@
  */
 package com.greenland.memorycards.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author jurijspe
  */
-public class Card {
+public class Card implements Serializable {
     
     private int id;
     private String question;
