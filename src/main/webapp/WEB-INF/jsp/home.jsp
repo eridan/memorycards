@@ -9,7 +9,6 @@
 <div id="content">
     <div id="mainContent">
         <section>
-            <h1>Hello ${user.fName} ${user.lName}!</h1>
             <c:forEach items="${user.cardGroups}" var="group">
                 <c:forEach items="${group.cardList}" var="card">
                     <table>

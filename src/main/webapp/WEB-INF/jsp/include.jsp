@@ -14,22 +14,25 @@
         <link rel="stylesheet" type="text/css" href="css/fc_basic.css" />
         <title><fmt:message key="title"/></title>
     </head>
-    
+
     <body>
         <header>
-<!--            <span style="float: right">
-                    <a href="?lang=en">en</a> 
-                    | 
-                    <a href="?lang=ru"><fmt:message key="changeLangRu"/></a>
-            </span>-->
+            <!--            <span style="float: right">
+                                <a href="?lang=en">en</a> 
+                                | 
+                                <a href="?lang=ru"><fmt:message key="changeLangRu"/></a>
+                        </span>-->
             <h1><fmt:message key="title"/></h1>
+            <section><h1>${user.fName} ${user.lName}</h1></section>
         </header>
         <nav>
             <ul>
                 <li><a href="#"><fmt:message key="navHelp"/></a></li>
                 <li><a href="#"><fmt:message key="navAbout"/></a></li>
                 <li><a href="#"><fmt:message key="navContact"/></a></li>
-                <li><a href="index.do"><fmt:message key="navLogout"/></a></li>
+                <section>
+                    <li><a href="index.do">Logout</a></li>
+                </section>
             </ul>
         </nav>
 

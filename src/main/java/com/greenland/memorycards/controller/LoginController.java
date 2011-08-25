@@ -29,7 +29,9 @@ public class LoginController implements Controller{
         this.userManager = userManager;
     }
     
-    protected final Log logger = LogFactory.getLog(getClass()); 
+    protected final Log logger = LogFactory.getLog(getClass());
+    
+    @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         logger.info("Returning home page");
