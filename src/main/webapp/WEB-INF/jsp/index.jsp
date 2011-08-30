@@ -2,7 +2,7 @@
 
 <div id="content">
     <div id="mainContent">
-        <span><fmt:message key="welcomeMsg"/></span>
+        <span id="msg"><fmt:message key="welcomeMsg"/></span>
     </div>
     <aside>
         <form action="login.do" method="POST">

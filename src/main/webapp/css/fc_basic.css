@@ -61,6 +61,7 @@ nav ul li a {
 
 nav ul li a:hover {
     color: black;
+    text-decoration: underline;
 }
 
 nav ul li.selected a {
@@ -78,6 +79,16 @@ body {
 #content {
     display: table;
     margin-top: 100px;
+    width: inherit;
+}
+
+#cardsTable {
+    width: inherit;
+    color: black;
+}
+
+#cardsTable td {
+    width: 50%;
 }
 
 #mainContent {
@@ -85,7 +96,7 @@ body {
     width: 640px;
 }
 
-#mainContent span {
+#msg {
     display: inline-block;
 }
 
@@ -118,22 +129,6 @@ aside {
 .loginButton {
     float: right;
     color: green;
-}
-
-h2 {
-    font-size: 28px;
-    line-height: 44px;
-    padding: 22px 0;
-}
-
-h3 {
-    font-size: 18px;
-    line-height: 22px;
-    padding: 11px 0;
-}
-
-p {
-    padding-bottom: 22px;
 }
 
 footer {

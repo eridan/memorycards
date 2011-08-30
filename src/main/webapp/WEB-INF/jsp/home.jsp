@@ -7,34 +7,24 @@
 
 
 <div id="content">
-    <div id="mainContent">
-        <table>
+    <table id="cardsTable">
+        <thead> 
+            <tr> 
+                <th></th> 
+                <th></th> 
+            </tr> 
+        </thead> 
+        <tbody>
             <c:forEach items="${user.cardGroups}" var="group">
                 <c:forEach items="${group.cardList}" var="card">
-                    <tr>
+                    <tr class="gradeA">
                         <td>${card.question}<p>${card.questionCode}</p></td>
                         <td>${card.answer}<p>${card.answerCode}</p></td>
                     </tr>
                 </c:forEach>
             </c:forEach>
-        </table>
-    </div>
-    <aside>
-        <table>
-            <c:forEach items="${user.cardGroups}" var="group">
-                <tr>
-                    <td>
-                        <a href="#">${group.groupName}</a>
-                    </td>
-                    <td><a href="#">Delete</a>&nbsp;<a href="#">Update</a>&nbsp;<a href="#">Create</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>${group.groupName}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </aside>
+        </tbody>
+    </table>
 </div>
 
 <footer>
