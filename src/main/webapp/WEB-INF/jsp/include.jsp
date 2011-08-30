@@ -30,9 +30,9 @@
                 <li><a href="#"><fmt:message key="navHelp"/></a></li>
                 <li><a href="#"><fmt:message key="navAbout"/></a></li>
                 <li><a href="#"><fmt:message key="navContact"/></a></li>
-                <section>
+                <span>
                     <li><a href="index.do">Logout</a></li>
-                </section>
+                </span>
             </ul>
         </nav>
 

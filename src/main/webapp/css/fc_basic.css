@@ -18,18 +18,20 @@ header, footer, aside, nav, article {
 }
 
 header > h1 {
+    margin-top: 45px;
     text-align: center;
     font-size: 4em;
-    color: #FCFCFC;
+    color: green;
     text-shadow: 0px -1px 3px #000;
 }
 
 nav {
     position: absolute;
     left: inherit;
-    width: 940px;
+    width: 938px;
     background-color: #FCFCFC;
     border-radius: 40px 15px 15px 15px;
+    border: 1px solid green;
 }
 
 nav ul {
@@ -42,7 +44,7 @@ nav ul li {
     float: left;
 }
 
-nav ul section {
+nav ul span {
     float: right;
 }
 
@@ -70,6 +72,7 @@ body {
     width: 940px;
     font: 13px/22px Helvetica, Arial, sans-serif;
     background: #f0f0f0;
+    color: green;
 }
 
 #content {
@@ -79,33 +82,17 @@ body {
 
 #mainContent {
     display: table-cell;
-    width: 620px;
-    padding-right: 22px;
+    width: 640px;
+}
+
+#mainContent span {
+    display: inline-block;
 }
 
 aside {
     display: table-cell;
+    padding: 10px;
     width: 300px;
-}
-
-h2 {
-    font-size: 28px;
-    line-height: 44px;
-    padding: 22px 0;
-}
-
-h3 {
-    font-size: 18px;
-    line-height: 22px;
-    padding: 11px 0;
-}
-
-p {
-    padding-bottom: 22px;
-}
-
-#loginForm, #listCardGroups {
-    position: absolute;
     border:1px solid #93CE37;
     border-bottom:3px solid #9ED929;
     background-color:#9DD929;
@@ -126,8 +113,32 @@ p {
     -webkit-border-top-left-radius:5px;
     -webkit-border-top-right-radius:5px;
     border-radius:15px 15px 40px 15px;
-/*    border-top-left-radius:5px;
-    border-top-right-radius:5px;*/
+}
+
+.loginButton {
+    float: right;
+    color: green;
+}
+
+h2 {
+    font-size: 28px;
+    line-height: 44px;
+    padding: 22px 0;
+}
+
+h3 {
+    font-size: 18px;
+    line-height: 22px;
+    padding: 11px 0;
+}
+
+p {
+    padding-bottom: 22px;
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
 }
 
 
