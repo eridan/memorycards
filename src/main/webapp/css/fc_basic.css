@@ -83,12 +83,15 @@ body {
 }
 
 #cardsTable {
-    width: inherit;
+    margin: 10px auto;
+    padding: 0;
     color: black;
+    clear: both;
+    min-height: 302px;
 }
 
-#cardsTable td {
-    width: 50%;
+#tableLength {
+    color:green;
 }
 
 #mainContent {
@@ -98,6 +101,7 @@ body {
 
 #msg {
     display: inline-block;
+    font: 17px/22px Helvetica,Arial,sans-serif;
 }
 
 aside {
@@ -124,6 +128,11 @@ aside {
     -webkit-border-top-left-radius:5px;
     -webkit-border-top-right-radius:5px;
     border-radius:15px 15px 40px 15px;
+    height: 120px;
+}
+
+#loginForm {
+    vertical-align: 50%;
 }
 
 .loginButton {

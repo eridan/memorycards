@@ -5,7 +5,7 @@
         <span id="msg"><fmt:message key="welcomeMsg"/></span>
     </div>
     <aside>
-        <form action="login.do" method="POST">
+        <form id="loginForm" action="login.do" method="POST">
             <table>
                 <tr>
                     <td><fmt:message key="loginEmail"/></td>

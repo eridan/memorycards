@@ -18,6 +18,7 @@ public class CardGroup implements Serializable{
     private String groupName;
     private String description;
     private List<Card> cardList;
+    private boolean defaultGrp;
     private Date creationDate;
     private Date updateDate;
 
@@ -67,6 +68,14 @@ public class CardGroup implements Serializable{
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public boolean isDefaultGrp() {
+        return defaultGrp;
+    }
+
+    public void setDefaultGrp(boolean defaultGrp) {
+        this.defaultGrp = defaultGrp;
     }
     
 }
