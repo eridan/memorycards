@@ -35,6 +35,7 @@
     min-height: 302px;
     clear: both;
     _height: 302px;
+    padding-bottom: 30px;
     zoom: 1; /* Feeling sorry for IE */
 }
 
@@ -57,6 +58,7 @@
 .dataTables_length {
     width: 40%;
     float: left;
+    color: #008000;
 }
 
 .dataTables_filter {
@@ -127,11 +129,12 @@ table.display {
 
 table.display thead th {
     padding: 3px 18px 3px 10px;
-    border-bottom: 1px solid black;
     font-weight: bold;
-    background: none repeat scroll 0 0 white;
-    color: green;
     font: 15px/22px Helvetica,Arial,sans-serif;
+
+    background: url("images/ui-bg_glass_75_90e494_1x400.png") repeat-x scroll 50% 50% #90E494;
+    border: 1px solid #D3D3D3;
+    color: #008000;
 }
 
 table.display tfoot th {
@@ -304,15 +307,18 @@ td.details {
 }
 
 .paging_full_numbers span.paginate_button {
-    background-color: #ddd;
+    background: url("images/ui-bg_glass_75_90e494_1x400.png") repeat-x scroll 50% 50% #90E494;
+    border: 1px solid #D3D3D3;
+    color: #008000;
 }
 
 .paging_full_numbers span.paginate_button:hover {
-    background-color: #ccc;
+    background: url("images/ui-bg_glass_75_2ac631_1x400.png") repeat-x scroll 50% 50% #2AC631;
+    color: black;
 }
 
 .paging_full_numbers span.paginate_active {
-    background-color: #99B3FF;
+    background-color: #F0F0F0;
 }
 
 table.display tr.even.row_selected td {

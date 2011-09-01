@@ -90,10 +90,6 @@ body {
     min-height: 302px;
 }
 
-#tableLength {
-    color:green;
-}
-
 #mainContent {
     display: table-cell;
     width: 640px;

@@ -12,7 +12,7 @@
 
 <!-- Cloudfoundry Deployment properties -->
 
-<!--    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/memorycards" />
@@ -22,17 +22,17 @@
 
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="classpath:db-schema.sql"/>
-    </jdbc:initialize-database>-->
+    </jdbc:initialize-database>
     
 <!-- Local / Dev / Test Deployment properties -->
     
-    <bean id="propertyConfigurer"
+<!--    <bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		p:location="/WEB-INF/classes/jdbc.properties" />
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" 
 		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}" p:username="${jdbc.username}" 
-		p:password="${jdbc.password}" /> 
+		p:password="${jdbc.password}" /> -->
     
 
 	<!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
