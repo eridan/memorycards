@@ -72,6 +72,14 @@
                 <li><a href="#"><fmt:message key="navHelp"/></a></li>
                 <li><a href="#"><fmt:message key="navAbout"/></a></li>
                 <li><a href="#"><fmt:message key="navContact"/></a></li>
+                <li><a href="#"><fmt:message key="navExtras"/></a>
+                    <ul id="Extras">
+                        <li><a href="#"><fmt:message key="navManUsers"/></a></li>
+                        <li><a href="#"><fmt:message key="navManGroups"/></a></li>
+                        <li><a href="#"><fmt:message key="navManCards"/></a></li>
+                        <li><a href="#"><fmt:message key="navRunTest"/></a></li>
+                    </ul>
+                </li>
                 <span>
                     <li><a href="index.do">Logout</a></li>
                 </span>
