@@ -25,18 +25,17 @@ header > h1 {
     text-shadow: 0px -1px 3px #000;
 }
 
+/* Navigation menu */
+
 nav {
-    position: absolute;
-    left: inherit;
-    width: 938px;
     background-color: #FCFCFC;
     border-radius: 40px 15px 15px 15px;
     border: 1px solid green;
+    height: 45px;
 }
 
 nav ul {
-    margin: 0 auto;
-    width: 940px;
+    margin: auto;
     list-style: none;
 }
 
@@ -50,10 +49,9 @@ nav ul span {
 
 nav ul li a {
     display: block;
-    margin-right: 20px;
     width: 140px;
     font-size: 14px;
-    line-height: 44px;
+    line-height: 45px;
     text-align: center;
     text-decoration: none;
     color: #32CD32;
@@ -68,44 +66,43 @@ nav ul li.selected a {
     color: black;
 }
 
-body {
-    margin: 0 auto;
-    width: 940px;
-    font: 13px/22px Helvetica, Arial, sans-serif;
-    background: #f0f0f0;
-    color: green;
+nav ul li ul {
+    display: none;
 }
 
-#content {
-    display: table;
-    margin-top: 100px;
-    width: inherit;
+nav ul li:hover ul{ /* Display the dropdown on hover */
+	display: block; /* Bring back on-screen when needed */
+        position: absolute;
+        z-index: 5;
 }
 
-#cardsTable {
-    margin: 10px auto;
-    padding: 0;
-    color: black;
-    clear: both;
-    min-height: 302px;
+nav ul li ul li {
+    border-radius: 40px 15px 15px 15px;
+    border: 1px solid #008000;
+    float: none;
+    background: #FCFCFC;
+    white-space:nowrap;
+    text-align: right;
+    width: 130px;
+    padding-right: 10px;
+    margin-left: -40px;
 }
 
-#mainContent {
-    display: table-cell;
-    width: 640px;
+nav ul li ul li a {
+    font-size: 14px;
+    line-height: 45px;
+    text-align: right;
+    border: none;
+    width: 130px;
 }
 
-#msg {
-    display: inline-block;
-    font: 17px/22px Helvetica,Arial,sans-serif;
-}
-
-aside {
-    display: table-cell;
-    padding: 10px;
-    width: 300px;
-    border:1px solid #93CE37;
-    border-bottom:3px solid #9ED929;
+nav ul li ul li a:hover {
+    padding-right: 10px;
+    font-size: 14px;
+    line-height: 45px;
+    text-align: right;
+    border-radius: 40px 15px 15px 15px;
+    border: 1px solid green;
     background-color:#9DD929;
     background:-webkit-gradient(
         linear,
@@ -121,20 +118,31 @@ aside {
         rgb(139,198,66) 51%,
         rgb(158,217,41) 87%
         );
-    -webkit-border-top-left-radius:5px;
-    -webkit-border-top-right-radius:5px;
-    border-radius:15px 15px 40px 15px;
-    height: 120px;
+    
 }
 
-#loginForm {
-    vertical-align: 50%;
-}
+/* End of Navigation */
 
-.loginButton {
-    float: right;
+body {
+    margin: 0 auto;
+    width: 940px;
+    font: 13px/22px Helvetica, Arial, sans-serif;
+    background: #f0f0f0;
     color: green;
 }
+
+#content {
+    margin-top: 40px;
+}
+
+#cardsTable {
+    margin: 10px auto;
+    padding: 0;
+    color: black;
+    clear: both;
+    min-height: 302px;
+}
+
 
 footer {
     margin-top: 20px;

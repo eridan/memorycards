@@ -4,10 +4,7 @@
     Author     : jurijspe
 --%>
 <!DOCTYPE HTML>
-
-<%@ page session="false"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="/WEB-INF/jsp/include_libs.jsp"%>
 
 <html>
     <head>
@@ -25,11 +22,20 @@
             <h1><fmt:message key="title"/></h1>
             <section><h1>${user.fName} ${user.lName}</h1></section>
         </header>
+        
         <nav>
             <ul>
                 <li><a href="#"><fmt:message key="navHelp"/></a></li>
                 <li><a href="#"><fmt:message key="navAbout"/></a></li>
                 <li><a href="#"><fmt:message key="navContact"/></a></li>
+                <li><a href="#"><fmt:message key="navExtras"/></a>
+                    <ul id="Extras">
+                        <li><a href="#"><fmt:message key="navManUsers"/></a></li>
+                        <li><a href="#"><fmt:message key="navManGroups"/></a></li>
+                        <li><a href="#"><fmt:message key="navManCards"/></a></li>
+                        <li><a href="#"><fmt:message key="navRunTest"/></a></li>
+                    </ul>
+                </li>
                 <span>
                     <li><a href="index.do">Logout</a></li>
                 </span>
