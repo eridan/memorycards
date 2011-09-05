@@ -3,10 +3,21 @@
 <html>
     <head>
 
-        <style type="text/css" title="currentStyle"> 
-            @import "css/tabs.css";
-            @import "css/demo_table.css";
-        </style>
+        <c:if test="${fn:containsIgnoreCase(header['User-Agent'],'Windows')}">
+            <style type="text/css" title="currentStyle">
+                @import "css/tabs.css";
+                @import "css/demo_table.css";
+            </style>
+            <link rel="stylesheet" media="handheld" type="text/css" href="css/mob_home.css" />
+        </c:if>
+        <c:if test="${
+              fn:containsIgnoreCase(header['User-Agent'],'iPod') || 
+                  fn:containsIgnoreCase(header['User-Agent'],'iPhone') ||
+                  fn:containsIgnoreCase(header['User-Agent'],'Android')
+              }">
+            <link rel="stylesheet" type="text/css" href="css/mob_home.css" />
+        </c:if>
+
 
         <script type="text/javascript" src="JavaScript/jquery-1.6.2.min.js"></script>
         <script type="text/javascript" src="JavaScript/jquery-ui-1.8.16.custom.min.js"></script>
@@ -45,7 +56,7 @@
             <div id="tabs">
                 <ul>
                     <c:forEach items="${user.cardGroups}" var="group">
-                        <li><a href="#${group.id}" onClick="javascript:dataTable.reload(true)">${group.groupName}</a></li>
+                        <li><a href="#${group.id}">${group.groupName}</a></li>
                     </c:forEach>
                 </ul>
 
@@ -72,6 +83,26 @@
                     </div>
                 </c:forEach>
             </div>
+        </div>
+
+        <div id="mobileView">
+            <c:forEach items="${user.cardGroups}" var="group">
+                <table>
+                    <thead>
+                    <th colspan="2">${group.groupName}</th>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${group.cardList}" var="card">
+                            <tr class="question">
+                                <td><b>Question: </b>${card.question}<p>${card.questionCode}</p></td>
+                            </tr>
+                            <tr class="answer">
+                                <td><b>Answer: </b>${card.answer}<p>${card.answerCode}</p></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:forEach>
         </div>
 
         <footer>

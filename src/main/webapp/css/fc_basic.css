@@ -143,6 +143,9 @@ body {
     min-height: 302px;
 }
 
+#mobileView {
+    display: none;
+}
 
 footer {
     margin-top: 20px;

@@ -30,7 +30,7 @@
                                 <a href="?lang=ru"><fmt:message key="changeLangRu"/></a>
                         </span>-->
             <h1><fmt:message key="title"/></h1>
-            <section><h1>${user.fName} ${user.lName}</h1></section>
+            <section>${user.fName} ${user.lName}</section>
         </header>
 
         <nav>
@@ -51,4 +51,3 @@
                 </span>
             </ul>
         </nav>
-

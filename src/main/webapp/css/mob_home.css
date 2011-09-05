@@ -1,0 +1,44 @@
+/* 
+    Document   : mob_home
+    Created on : 05-Sep-2011, 16:06:04
+    Author     : Jura
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+#content {
+    display: none;
+}
+
+#mobileView table {
+    margin-top: 10px;
+    border: 5px dotted green;
+    background: #F0F0F0;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 45px;
+}
+
+#mobileView table thead th{
+    text-align: center;
+    font-size: 60px;
+    border-bottom: 2px solid black;
+}
+
+#mobileView table tr{
+    border-bottom: 2px solid black;
+    padding: 20px;
+}
+
+#mobileView table td{
+    padding: 20px;
+}
+
+.question {
+    background: yellow;
+}
+
