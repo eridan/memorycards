@@ -4,7 +4,6 @@
  */
 package com.greenland.memorycards.controller;
 
-
 import com.greenland.memorycards.model.User;
 
 import com.greenland.memorycards.service.UserManager;
@@ -21,25 +20,28 @@ import org.springframework.web.servlet.mvc.Controller;
  *
  * @author jurijspe
  */
-public class LoginController implements Controller{
-    
+public class LoginController implements Controller {
+
+    private User user;
     private UserManager userManager;
 
     public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
     }
-    
     protected final Log logger = LogFactory.getLog(getClass());
-    
+
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException { 
+            throws ServletException, IOException {
         logger.info("Returning home page");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        User appUser = userManager.getUser(email, password);
-        request.getSession().setAttribute("user", appUser);
-        return new ModelAndView("home", "user", appUser);
+        if (request.getSession().getAttribute("user") == null) {
+            user = userManager.getUser(email, password);
+            request.getSession().setAttribute("user", user);
+        } else {
+            user = (User)request.getSession().getAttribute("user");
+        }
+        return new ModelAndView("home", "user", user);
     }
-    
 }

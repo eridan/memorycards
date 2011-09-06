@@ -3,12 +3,13 @@
 <html>
     <head>
 
-        <c:if test="${fn:containsIgnoreCase(header['User-Agent'],'Windows')}">
+        <c:if test="${fn:containsIgnoreCase(header['User-Agent'],'Windows') || 
+                      fn:containsIgnoreCase(header['User-Agent'],'Unix') ||
+                      fn:containsIgnoreCase(header['User-Agent'],'Linux')}">
             <style type="text/css" title="currentStyle">
                 @import "css/tabs.css";
                 @import "css/demo_table.css";
             </style>
-            <link rel="stylesheet" media="handheld" type="text/css" href="css/mob_home.css" />
         </c:if>
         <c:if test="${
               fn:containsIgnoreCase(header['User-Agent'],'iPod') || 

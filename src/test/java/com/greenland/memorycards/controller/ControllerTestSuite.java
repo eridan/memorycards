@@ -16,7 +16,8 @@ import org.junit.runners.Suite;
  * @author jurijspe
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({com.greenland.memorycards.controller.LoginControllerTest.class})
+@Suite.SuiteClasses({com.greenland.memorycards.controller.LoginControllerTest.class,
+    com.greenland.memorycards.controller.CardGroupsControllerTest.class})
 public class ControllerTestSuite {
 
     @BeforeClass
@@ -34,5 +35,4 @@ public class ControllerTestSuite {
     @After
     public void tearDown() throws Exception {
     }
-    
 }

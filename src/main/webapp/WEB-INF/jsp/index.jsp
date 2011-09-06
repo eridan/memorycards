@@ -1,9 +1,11 @@
-<%@ page session="false"%>
+<%request.getSession(true).invalidate();%>
 <%@ include file="/WEB-INF/jsp/include.jsp"%>
 
 <html>
     <head>
-        <c:if test="${fn:containsIgnoreCase(header['User-Agent'],'Windows')}">
+        <c:if test="${fn:containsIgnoreCase(header['User-Agent'],'Windows') || 
+                      fn:containsIgnoreCase(header['User-Agent'],'Unix') ||
+                      fn:containsIgnoreCase(header['User-Agent'],'Linux')}">
             <link rel="stylesheet" type="text/css" href="css/login.css" />
         </c:if>
         <c:if test="${

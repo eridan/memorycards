@@ -59,6 +59,7 @@ public class UserManagerImplTest {
         System.out.println("getUser");
         // define expectations for mock object
         userDaoMock.checking(new Expectations() {
+
             {
                 User aUser = new User();
                 aUser.setEmail("test@mail.ru");
@@ -69,8 +70,9 @@ public class UserManagerImplTest {
                 will(returnValue(aUser));
             }
         });
-        
+
         cardGroupManagerMock.checking(new Expectations() {
+
             {
                 CardGroup group = new CardGroup();
                 CardGroup group1 = new CardGroup();
@@ -97,6 +99,7 @@ public class UserManagerImplTest {
     public void testGetAllUsers() {
         System.out.println("getAllUsers");
         userDaoMock.checking(new Expectations() {
+
             {
                 User aUser = new User();
                 aUser.setEmail("test@mail.ru");
@@ -111,5 +114,32 @@ public class UserManagerImplTest {
         });
         List<User> users = um.getAllUsers();
         assertEquals(1, users.size());
+    }
+
+    /**
+     * Test of getUser method, of class UserManagerImpl.
+     */
+    @Test
+    public void testGetInvalidUser() {
+        // define expectations for mock object
+        userDaoMock.checking(new Expectations() {
+
+            {
+                oneOf(userDao).getUser("invalid@mail.ru", "test");
+                will(returnValue(null));
+            }
+        });
+
+        cardGroupManagerMock.checking(new Expectations() {
+
+            {
+                oneOf(cardGroupManager).getCardGroupsForUser("invalid@mail.ru");
+                will(returnValue(null));
+            }
+        });
+        String email = "invalid@mail.ru";
+        String password = "test";
+        User user = um.getUser(email, password);
+        assertNull(user);
     }
 }

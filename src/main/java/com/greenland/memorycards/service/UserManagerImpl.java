@@ -12,8 +12,8 @@ import java.util.List;
  *
  * @author jurijspe
  */
-public class UserManagerImpl implements UserManager{
-    
+public class UserManagerImpl implements UserManager {
+
     private UserDao userDao;
     private CardGroupManager cardGroupManager;
 
@@ -29,7 +29,9 @@ public class UserManagerImpl implements UserManager{
     public User getUser(String email, String password) {
         User aUser = new User();
         aUser = userDao.getUser(email, password);
-        aUser.setCardGroups(cardGroupManager.getCardGroupsForUser(email));
+        if (aUser != null) {
+            aUser.setCardGroups(cardGroupManager.getCardGroupsForUser(email));
+        }
         return aUser;
     }
 
@@ -37,7 +39,4 @@ public class UserManagerImpl implements UserManager{
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
-    
-    
-    
 }

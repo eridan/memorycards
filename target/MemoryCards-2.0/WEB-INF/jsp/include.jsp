@@ -8,8 +8,10 @@
 
 <html>
     <head>
-        <c:if test="${fn:containsIgnoreCase(header['User-Agent'],'Windows')}">
-            <link rel="stylesheet" type="text/css" href="css/fc_basic.css" />
+        <c:if test="${fn:containsIgnoreCase(header['User-Agent'],'Windows') || 
+                      fn:containsIgnoreCase(header['User-Agent'],'Unix') ||
+                      fn:containsIgnoreCase(header['User-Agent'],'Linux')}">
+              <link rel="stylesheet" type="text/css" href="css/fc_basic.css" />
         </c:if>
         <c:if test="${
               fn:containsIgnoreCase(header['User-Agent'],'iPod') || 
@@ -30,7 +32,7 @@
                                 <a href="?lang=ru"><fmt:message key="changeLangRu"/></a>
                         </span>-->
             <h1><fmt:message key="title"/></h1>
-            <section><h1>${user.fName} ${user.lName}</h1></section>
+            <section>${user.fName} ${user.lName}</section>
         </header>
 
         <nav>
@@ -41,7 +43,7 @@
                 <li id="Extras"><a href="#"><fmt:message key="navExtras"/></a>
                     <ul>
                         <li><a href="#"><fmt:message key="navManUsers"/></a></li>
-                        <li><a href="#"><fmt:message key="navManGroups"/></a></li>
+                        <li><a href="manageGroups.do"><fmt:message key="navManGroups"/></a></li>
                         <li><a href="#"><fmt:message key="navManCards"/></a></li>
                         <li><a href="#"><fmt:message key="navRunTest"/></a></li>
                     </ul>
@@ -51,4 +53,3 @@
                 </span>
             </ul>
         </nav>
-

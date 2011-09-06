@@ -31,8 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginControllerTest {
 
     private Mockery userManagerMock = new JUnit4Mockery();
-    
-    //mock object : ContactDAO (using JMock)
     private UserManager userManager = userManagerMock.mock(UserManager.class);
     private LoginController controller = new LoginController();
     private static MockHttpServletRequest request;
@@ -115,9 +113,6 @@ public class LoginControllerTest {
         userManagerMock.checking(new Expectations() {
 
             {
-                User aUser = new User();
-                aUser.setEmail("test@mail.ru");
-                aUser.setPassword("test");
                 oneOf(userManager).getUser("invalidUser@mail.ru", "invalid");
                 will(returnValue(null));
             }

@@ -66,3 +66,7 @@ aside {
     float: right;
     color: green;
 }
+
+#content {
+    background: none;
+}

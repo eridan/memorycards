@@ -23,10 +23,58 @@ header, footer, aside, nav, article {
 }
 
 header > h1 {
+    font-size: 100px;
     margin-top: 45px;
     text-align: center;
     color: green;
     text-shadow: 0px -1px 3px #000;
+}
+
+header section {
+    font-size: 40px;
+}
+
+nav {
+    background-color: #FCFCFC;
+    border-radius: 40px 15px 15px 15px;
+    border: 1px solid green;
+}
+
+nav ul {
+    list-style: none;
+    text-align: center;
+}
+
+nav ul li {
+    margin-right: 20px; 
+    margin-bottom: 20px; 
+    display: inline;
+}
+
+nav ul li a {
+    color: #32CD32;
+    text-decoration: none;
+    font-size: 50px;
+    text-align: center;
+}
+
+nav ul li ul {
+    display: none;
+}
+
+nav ul li:hover ul{ /* Display the dropdown on hover */
+	display: block; /* Bring back on-screen when needed */
+}
+
+nav ul li ul li {
+    display: list-item;
+    background: yellow;
+    text-align: right;
+    margin: 1em;
+}
+
+nav ul li ul li a {
+    color: black;
 }
 
 html, body {
@@ -36,3 +84,4 @@ html, body {
     margin: 0 auto;
     font: 30px/60px Helvetica, Arial, sans-serif;
 }
+
