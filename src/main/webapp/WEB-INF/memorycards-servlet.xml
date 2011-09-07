@@ -21,11 +21,16 @@
                 <prop key="index.do">indexController</prop>
                 <prop key="login.do">loginController</prop>
                 <prop key="manageGroups.do">cardGroupsController</prop>
+                <prop key="manageUsers.do">userManagementController</prop>
             </props>
         </property>
     </bean>
     
     <bean id="loginController" class="com.greenland.memorycards.controller.LoginController">
+        <property name="userManager" ref="userManager" />
+    </bean>
+    
+    <bean id="userManagementController" class="com.greenland.memorycards.controller.UserManagementController">
         <property name="userManager" ref="userManager" />
     </bean>
     

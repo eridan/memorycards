@@ -42,7 +42,7 @@
                 <li><a href="#"><fmt:message key="navContact"/></a></li>
                 <li id="Extras"><a href="#"><fmt:message key="navExtras"/></a>
                     <ul>
-                        <li><a href="#"><fmt:message key="navManUsers"/></a></li>
+                        <li><a href="manageUsers.do"><fmt:message key="navManUsers"/></a></li>
                         <li><a href="manageGroups.do"><fmt:message key="navManGroups"/></a></li>
                         <li><a href="#"><fmt:message key="navManCards"/></a></li>
                         <li><a href="#"><fmt:message key="navRunTest"/></a></li>

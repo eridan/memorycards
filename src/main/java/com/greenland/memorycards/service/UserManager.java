@@ -12,7 +12,18 @@ import java.util.List;
  * @author jurijspe
  */
 public interface UserManager {
-    
+
     User getUser(String email, String password);
+
     List<User> getAllUsers();
+
+    User getUser(int userId);
+
+    User combineUsers(User userToBeUpdated, User formUser);
+
+    void updateUser(User user);
+
+    void deleteUserWithId(Integer userId);
+
+    public void createNewUser(User formUser);
 }

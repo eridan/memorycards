@@ -12,8 +12,16 @@ import java.util.List;
  * @author jurijspe
  */
 public interface UserDao {
-    
+
     User getUser(String email, String password);
+
     List<User> getAllUsers();
-    
+
+    User getUser(int userId);
+
+    void updateUser(User user);
+
+    void deleteUserWithId(Integer userId);
+
+    public void createNewUser(User formUser);
 }

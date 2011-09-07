@@ -1,1 +1,1 @@
-select * from USERGROUP
+select * from USERGROUP;

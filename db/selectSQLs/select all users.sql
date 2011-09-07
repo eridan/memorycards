@@ -1,1 +1,1 @@
-SELECT * from USERS
+select * from USERS
