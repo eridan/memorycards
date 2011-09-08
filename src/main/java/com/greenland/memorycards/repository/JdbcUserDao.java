@@ -82,7 +82,7 @@ public class JdbcUserDao extends SimpleJdbcDaoSupport implements UserDao {
 
     @Override
     public void deleteUserWithId(Integer userId) {
-        logger.info("Deleting user from DB");
+        logger.warn("Deleting user from DB");
         MapSqlParameterSource mapping = new MapSqlParameterSource().addValue("id", userId);
 //        getSimpleJdbcTemplate().update(""
 //                + "DELETE "

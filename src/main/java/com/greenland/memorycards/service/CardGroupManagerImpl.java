@@ -43,5 +43,25 @@ public class CardGroupManagerImpl implements CardGroupManager{
         }
         return cardGroups;
     }
+
+    @Override
+    public void createNewCardGroup(CardGroup cardGroup) {
+        cardGroupDao.createNewCardGroup(cardGroup);
+    }
+
+    @Override
+    public void deleteCardGroupWithId(Integer groupId) {
+        cardGroupDao.deleteCardGroupWithId(groupId);
+    }
+
+    @Override
+    public CardGroup getCardGroup(int cardGroupId) {
+        return cardGroupDao.getCardGroup(cardGroupId);
+    }
+
+    @Override
+    public void updateCardGroup(CardGroup cardGroup) {
+        cardGroupDao.updateCardGroup(cardGroup);
+    }
     
 }

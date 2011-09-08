@@ -13,5 +13,13 @@ import java.util.List;
  */
 public interface CardGroupManager {
     
-    List<CardGroup> getCardGroupsForUser (String email);    
+    List<CardGroup> getCardGroupsForUser (String email);
+
+    public CardGroup getCardGroup(int cardGroupId);
+
+    public void updateCardGroup(CardGroup updatedCardGroup);
+
+    public void deleteCardGroupWithId(Integer valueOf);
+
+    public void createNewCardGroup(CardGroup formCardGroup);
 }

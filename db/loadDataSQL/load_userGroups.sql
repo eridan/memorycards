@@ -1,5 +1,6 @@
-INSERT INTO USERGROUP (userId, groupid) values(10, 1);
-INSERT INTO USERGROUP (userId, groupid) values(10, 2);
-INSERT INTO USERGROUP (userId, groupid) values(10, 3);
-INSERT INTO USERGROUP (userId, groupid) values(11, 2);
-INSERT INTO USERGROUP (userId, groupid) values(11, 1);
+INSERT INTO USERGROUP (userid, groupid) values(1, 0);
+INSERT INTO USERGROUP (userid, groupid) values(1, 1);
+INSERT INTO USERGROUP (userid, groupid) values(1, 2);
+INSERT INTO USERGROUP (userid, groupid) values(2, 2);
+INSERT INTO USERGROUP (userid, groupid) values(0, 2);
+INSERT INTO USERGROUP (userid, groupid) values(0, 1);
