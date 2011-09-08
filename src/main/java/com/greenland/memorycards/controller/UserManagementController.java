@@ -39,17 +39,27 @@ public class UserManagementController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // The below code smells. TODO: Refactor
+        
         logger.info("User Management Controller");
         Map<String, Object> model = new HashMap<String, Object>();
-        boolean create=false;
-        boolean delete=false;
+        boolean create = false;
+        boolean delete = false;
+        boolean update = false;
 
         String actionName = "";
         Enumeration e = request.getParameterNames();
         while (e.hasMoreElements()) {
             actionName = (String) e.nextElement();
-            if(actionName.equals("actioncreate")) create=true;
-            if(actionName.equals("actiondelete")) delete=true;
+            if (actionName.equalsIgnoreCase("actioncreate")) {
+                create = true;
+            }
+            if (actionName.equalsIgnoreCase("actiondelete")) {
+                delete = true;
+            }
+            if (actionName.equalsIgnoreCase("actionupdate")) {
+                update = true;
+            }
             logger.info("Action name: " + actionName);
         }
 
@@ -78,7 +88,7 @@ public class UserManagementController implements Controller {
 
         // Form actions
 
-        if (actionName.equalsIgnoreCase("actionupdate")) {
+        if (update) {
             logger.info("Updating ... ");
             User userToBeUpdated = new User();
             userToBeUpdated = userManager.getUser(Integer.valueOf(request.getParameter("actionupdate")));
@@ -92,7 +102,6 @@ public class UserManagementController implements Controller {
             User updatedUser = new User();
             updatedUser = userManager.combineUsers(userToBeUpdated, formUser);
             userManager.updateUser(updatedUser);
-//            model.remove("userToUpdate");
         }
 
         if (delete) {
@@ -100,7 +109,6 @@ public class UserManagementController implements Controller {
             System.out.println("User to delete: " + model.get("userToDelete"));
             System.out.println("ID = " + Integer.valueOf(request.getParameter("actiondelete")));
             userManager.deleteUserWithId(Integer.valueOf(request.getParameter("actiondelete")));
-//            model.remove("userToDelete");
         }
 
         if (create) {
@@ -111,11 +119,9 @@ public class UserManagementController implements Controller {
             formUser.setfName((String) request.getParameter("userFName"));
             formUser.setlName((String) request.getParameter("userLName"));
             userManager.createNewUser(formUser);
-//            model.remove("userToCreate");
         }
 
         // Display all USERS
-
         user = (User) request.getSession().getAttribute("user");
         List<User> userList = new ArrayList<User>();
         userList = userManager.getAllUsers();

@@ -36,6 +36,91 @@ public class CardGroupsController implements Controller{
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         logger.info("Card Group Manager");
+        
+//        // The below code smells. TODO: Refactor
+//        
+//        logger.info("User Management Controller");
+//        Map<String, Object> model = new HashMap<String, Object>();
+//        boolean create = false;
+//        boolean delete = false;
+//        boolean update = false;
+//
+//        String actionName = "";
+//        Enumeration e = request.getParameterNames();
+//        while (e.hasMoreElements()) {
+//            actionName = (String) e.nextElement();
+//            if (actionName.equalsIgnoreCase("actioncreate")) {
+//                create = true;
+//            }
+//            if (actionName.equalsIgnoreCase("actiondelete")) {
+//                delete = true;
+//            }
+//            if (actionName.equalsIgnoreCase("actionupdate")) {
+//                update = true;
+//            }
+//            logger.info("Action name: " + actionName);
+//        }
+//
+//        // Displaying forms
+//
+//        if (actionName.equalsIgnoreCase("edit")) {
+//            logger.info("Editing user (id=" + request.getParameter(actionName) + ")");
+//            int userId = Integer.valueOf(request.getParameter(actionName));
+//            User userToEdit = new User();
+//            userToEdit = userManager.getUser(userId);
+//            model.put("userToEdit", (User) userToEdit);
+//        }
+//
+//        if (actionName.equalsIgnoreCase("delete")) {
+//            logger.info("Deleting user (id=" + request.getParameter(actionName) + ")");
+//            int userId = Integer.valueOf(request.getParameter(actionName));
+//            User userToDelete = new User();
+//            userToDelete = userManager.getUser(userId);
+//            model.put("userToDelete", (User) userToDelete);
+//        }
+//
+//        if (actionName.equalsIgnoreCase("create")) {
+//            logger.info("Creating New user");
+//            model.put("userToCreate", new User());
+//        }
+//
+//        // Form actions
+//
+//        if (update) {
+//            logger.info("Updating ... ");
+//            User userToBeUpdated = new User();
+//            userToBeUpdated = userManager.getUser(Integer.valueOf(request.getParameter("actionupdate")));
+//
+//            // Could use formBacking Object instead. TODO: Refactor
+//            User formUser = new User();
+//            formUser.setEmail((String) request.getParameter("email"));
+//            formUser.setPassword((String) request.getParameter("password"));
+//            formUser.setfName((String) request.getParameter("userFName"));
+//            formUser.setlName((String) request.getParameter("userLName"));
+//            User updatedUser = new User();
+//            updatedUser = userManager.combineUsers(userToBeUpdated, formUser);
+//            userManager.updateUser(updatedUser);
+//        }
+//
+//        if (delete) {
+//            logger.info("Deleting ...");
+//            System.out.println("User to delete: " + model.get("userToDelete"));
+//            System.out.println("ID = " + Integer.valueOf(request.getParameter("actiondelete")));
+//            userManager.deleteUserWithId(Integer.valueOf(request.getParameter("actiondelete")));
+//        }
+//
+//        if (create) {
+//            logger.info("Creating ...");
+//            User formUser = new User();
+//            formUser.setEmail((String) request.getParameter("email"));
+//            formUser.setPassword((String) request.getParameter("password"));
+//            formUser.setfName((String) request.getParameter("userFName"));
+//            formUser.setlName((String) request.getParameter("userLName"));
+//            userManager.createNewUser(formUser);
+//        }
+//        
+        
+        
         User appUser = (User)request.getSession().getAttribute("user");
         List<CardGroup> cardGroups = new ArrayList<CardGroup>();
         cardGroups = cardGroupManager.getCardGroupsForUser(appUser.getEmail());

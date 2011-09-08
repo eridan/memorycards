@@ -142,4 +142,26 @@ public class UserManagerImplTest {
         User user = um.getUser(email, password);
         assertNull(user);
     }
+
+    /**
+     * Test of combineUser method, of class UserManagerImpl.
+     */
+    @Test
+    public void testCombineUser() {
+
+        User old = new User();
+        old.setEmail("old@mail.com");
+        old.setPassword("oldpassword");
+        old.setfName("oldname");
+        old.setlName("oldLname");
+        User newUser = new User();
+        newUser.setEmail("new@mail.com");
+        newUser.setPassword("newpassword");
+        newUser.setfName("");
+        newUser.setlName("newLname");
+        User result = um.combineUsers(old, newUser);
+        assertEquals("new@mail.com", result.getEmail());
+        assertEquals("newpassword", result.getPassword());
+        assertEquals("oldname", result.getfName());
+    }
 }
