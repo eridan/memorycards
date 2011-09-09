@@ -45,8 +45,8 @@ public class CardGroupManagerImpl implements CardGroupManager{
     }
 
     @Override
-    public void createNewCardGroup(CardGroup cardGroup) {
-        cardGroupDao.createNewCardGroup(cardGroup);
+    public void createNewCardGroupForUserId(int userId, CardGroup cardGroup) {
+        cardGroupDao.createNewCardGroupForUserId(userId, cardGroup);
     }
 
     @Override
@@ -56,7 +56,10 @@ public class CardGroupManagerImpl implements CardGroupManager{
 
     @Override
     public CardGroup getCardGroup(int cardGroupId) {
-        return cardGroupDao.getCardGroup(cardGroupId);
+        CardGroup cardGroup = new CardGroup();
+        cardGroup = cardGroupDao.getCardGroup(cardGroupId);
+        cardGroup.setCardList(cardManager.getAllCardsForGroup(cardGroupId));
+        return cardGroup;
     }
 
     @Override

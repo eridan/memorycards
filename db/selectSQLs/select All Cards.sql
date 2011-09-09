@@ -1,1 +1,1 @@
-select * from Card
+select * from CARD

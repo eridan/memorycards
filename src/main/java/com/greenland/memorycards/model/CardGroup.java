@@ -78,4 +78,8 @@ public class CardGroup implements Serializable{
         this.defaultGrp = defaultGrp;
     }
     
+    @Override
+    public String toString() {
+        return "Card Group ("+ id +", " + groupName +", " + description +", " + creationDate +", " + updateDate +")";
+    }
 }

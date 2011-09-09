@@ -43,6 +43,8 @@ public class CardGroupsController implements Controller{
         // The below code smells. TODO: Refactor
         
         logger.info("User Management Controller");
+        User appUser = (User)request.getSession().getAttribute("user");
+        
         Map<String, Object> model = new HashMap<String, Object>();
         boolean create = false;
         boolean delete = false;
@@ -96,10 +98,10 @@ public class CardGroupsController implements Controller{
 
             // Could use formBacking Object instead. TODO: Refactor
             CardGroup formCardGroup = new CardGroup();
+            formCardGroup.setId(cardGroupToBeUpdated.getId());
             formCardGroup.setGroupName((String) request.getParameter("groupName"));
             formCardGroup.setDescription((String) request.getParameter("description"));
-            CardGroup updatedCardGroup = new CardGroup();
-            cardGroupManager.updateCardGroup(updatedCardGroup);
+            cardGroupManager.updateCardGroup(formCardGroup);
         }
 
         if (delete) {
@@ -114,12 +116,11 @@ public class CardGroupsController implements Controller{
             CardGroup formCardGroup = new CardGroup();
             formCardGroup.setGroupName((String) request.getParameter("groupName"));
             formCardGroup.setDescription((String) request.getParameter("description"));
-            cardGroupManager.createNewCardGroup(formCardGroup);
+            cardGroupManager.createNewCardGroupForUserId(appUser.getId(), formCardGroup);
         }
         
         
         
-        User appUser = (User)request.getSession().getAttribute("user");
         List<CardGroup> cardGroups = new ArrayList<CardGroup>();
         cardGroups = cardGroupManager.getCardGroupsForUser(appUser.getEmail());
         model.put("cardGroups", cardGroups);

@@ -15,11 +15,13 @@ public interface CardGroupDao {
 
     public List<CardGroup> getCardGroupsForUser(String email);
 
-    public void createNewCardGroup(CardGroup cardGroup);
+    public void createNewCardGroupForUserId(int userId, CardGroup cardGroup);
 
     public void deleteCardGroupWithId(Integer groupId);
 
     public CardGroup getCardGroup(int cardGroupId);
+    
+    CardGroup getCardGroup(String groupName);
 
     public void updateCardGroup(CardGroup cardGroup);
 

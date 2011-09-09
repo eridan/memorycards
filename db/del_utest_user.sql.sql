@@ -1,0 +1,1 @@
+delete from USERS where email='utestUser@yahoo.com'

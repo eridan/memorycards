@@ -75,6 +75,7 @@ public class User implements Serializable{
         this.cardGroups = cardGroups;
     }
     
+    @Override
     public String toString() {
         return "User ("+ id +", " + email +", " + password +", " + fName +", " + lName +")";
     }

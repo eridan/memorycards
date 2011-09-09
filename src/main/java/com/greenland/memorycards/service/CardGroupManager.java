@@ -21,5 +21,5 @@ public interface CardGroupManager {
 
     public void deleteCardGroupWithId(Integer valueOf);
 
-    public void createNewCardGroup(CardGroup formCardGroup);
+    public void createNewCardGroupForUserId(int userId, CardGroup formCardGroup);
 }

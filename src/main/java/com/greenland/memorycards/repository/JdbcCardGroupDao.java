@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,35 +21,49 @@ import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
  *
  * @author jurijspe
  */
-public class JdbcCardGroupDao extends SimpleJdbcDaoSupport implements CardGroupDao{
-    
+public class JdbcCardGroupDao extends SimpleJdbcDaoSupport implements CardGroupDao {
+
     /** Logger for this class and subclasses */
     protected final Log logger = LogFactory.getLog(getClass());
 
     @Override
     public List<CardGroup> getCardGroupsForUser(String email) {
-        logger.info("DB: getting user's ("+email+") Card Group List");
+        logger.info("DB: getting user's (" + email + ") Card Group List");
         List<CardGroup> userCardGroups = new ArrayList<CardGroup>();
-        String sqlString = 
+        String sqlString =
                 "Select GROUPS.* "
                 + "FROM GROUPS, USERGROUP, USERS "
                 + "WHERE USERS.ID=USERGROUP.USERID "
                 + "AND USERGROUP.GROUPID=GROUPS.ID "
-                + "AND USERS.EMAIL='"+email+"'";
+                + "AND USERS.EMAIL='" + email + "'";
         userCardGroups = getSimpleJdbcTemplate().query(sqlString, new CardGroupMapper());
         return userCardGroups;
     }
 
     @Override
-    public void createNewCardGroup(CardGroup cardGroup) {
+    public void createNewCardGroupForUserId(int userId, CardGroup cardGroup) {
         logger.warn("Creating new Card Group on DB");
-        String sql ="INSERT INTO GROUPS "
-                + "(groupname, description, creationDate) values"
-                + "(:groupname, :description, LOCALTIME)";
+        
+        CardGroup group = new CardGroup();
+        String insertCardSQL = "INSERT INTO GROUPS "
+                + "(groupname, description, creationDate, updateDate) values"
+                + "(:groupname, :description, null, null)";
 
-        getSimpleJdbcTemplate().update(sql, new MapSqlParameterSource().
-                addValue("groupname", cardGroup.getGroupName()).
-                addValue("description", cardGroup.getDescription()));
+        String insertUserGroupSQL = "INSERT INTO USERGROUP "
+                + "(userid, groupid) values"
+                + "(:userId, :groupId)";
+        try {
+            getSimpleJdbcTemplate().update(insertCardSQL, new MapSqlParameterSource().addValue("groupname", cardGroup.getGroupName()).
+                    addValue("description", cardGroup.getDescription()));
+            
+            group = getCardGroup(cardGroup.getGroupName());
+            
+            getSimpleJdbcTemplate().update(insertUserGroupSQL, new MapSqlParameterSource().addValue("userId", userId).
+                    addValue("groupId", group.getId()));
+        } catch (DuplicateKeyException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -59,7 +74,7 @@ public class JdbcCardGroupDao extends SimpleJdbcDaoSupport implements CardGroupD
 //                + "DELETE "
 //                + "FROM GROUPS, USERGROUP, USERS "
 //                + "WHERE USERS.ID=USERGROUP.USERID AND USERGROUP.GROUPID=GROUPS.ID AND USERS.ID=:id", mapping);
-        getSimpleJdbcTemplate().update("Delete from CARDGROUP where groupid=:id", mapping);
+        getSimpleJdbcTemplate().update("Delete from GROUPCARD where groupid=:id", mapping);
         getSimpleJdbcTemplate().update("Delete from GROUPS where id=:id", mapping);
     }
 
@@ -79,27 +94,38 @@ public class JdbcCardGroupDao extends SimpleJdbcDaoSupport implements CardGroupD
     }
 
     @Override
+    public CardGroup getCardGroup(String groupName) {
+        logger.info("DB: Fetch Card Group with Name: " + groupName);
+        CardGroup cardGroup = new CardGroup();
+        try {
+            cardGroup = (CardGroup) getSimpleJdbcTemplate().queryForObject(
+                    "SELECT * FROM GROUPS "
+                    + "WHERE groupname = '" + groupName + "'", new CardGroupMapper());
+        } catch (EmptyResultDataAccessException e) {
+            logger.error("Card Group (Group Name =" + groupName + ") not found exception");
+            return null;
+        }
+        return cardGroup;
+    }
+
+    @Override
     public void updateCardGroup(CardGroup cardGroup) {
         logger.info("Updating Card Group on DB");
-        String sql ="UPDATE GROUPS SET "
+        String sql = "UPDATE GROUPS SET "
                 + "groupname = :groupname, "
-                + "description = :description,"
-                + "updateDate = LOCALTIME "
+                + "description = :description "
                 + "WHERE ID=:id";
-        getSimpleJdbcTemplate().update(sql, new MapSqlParameterSource().
-                addValue("groupname", cardGroup.getGroupName()).
-                addValue("description", cardGroup.getDescription()).
-                addValue("id", cardGroup.getId()));
+        try {
+            getSimpleJdbcTemplate().update(sql, new MapSqlParameterSource().addValue("groupname", cardGroup.getGroupName()).
+                    addValue("description", cardGroup.getDescription()).
+                    addValue("id", cardGroup.getId()));
+        } catch (DuplicateKeyException e) {
+            e.printStackTrace();
+        }
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
     private static class CardGroupMapper implements RowMapper<CardGroup> {
+
         @Override
         public CardGroup mapRow(ResultSet rs, int i) throws SQLException {
             CardGroup group = new CardGroup();

@@ -41,7 +41,7 @@ public class JdbcUserDaoTest extends AbstractTransactionalDataSourceSpringContex
     @Override
     protected void onSetUpInTransaction() throws Exception {
 //        super.deleteFromTables(new String[] {"users"});
-//        super.executeSqlScript("file:db/test/del_utest_user.sql", true);
+//        super.executeSqlScript("file:db/del_utest_user.sql", true);
     }
 
     /**
@@ -95,6 +95,7 @@ public class JdbcUserDaoTest extends AbstractTransactionalDataSourceSpringContex
         assertEquals("utest", dbUser.getPassword());
         assertEquals("uTest fName", dbUser.getfName());
         assertEquals("uTest lName", dbUser.getlName());
+        userDao.deleteUserWithId(dbUser.getId());
     }
 
     /**
@@ -103,7 +104,12 @@ public class JdbcUserDaoTest extends AbstractTransactionalDataSourceSpringContex
     @Test
     public void testUpdateUser() {
         System.out.println("updateUser");
-        testCreateNewUser();
+        User aUser = new User();
+        aUser.setEmail("utestUser@yahoo.com");
+        aUser.setPassword("utest");
+        aUser.setfName("uTest fName");
+        aUser.setlName("uTest lName");
+        userDao.createNewUser(aUser);
         int expId = userDao.getUser("utestUser@yahoo.com", "utest").getId();
         User user = new User();
         user.setId(expId);
@@ -121,14 +127,21 @@ public class JdbcUserDaoTest extends AbstractTransactionalDataSourceSpringContex
         assertEquals("lName", dbUser.getlName());
         // Making sure its the same user
         assertEquals(expId, dbUser.getId());
+        userDao.deleteUserWithId(dbUser.getId());
     }
+    
     /**
      * Test of deleteUserWithId method, of class JdbcUserDao.
      */
     @Test
     public void testDeleteUserWithId() {
         System.out.println("deleteUserWithId");
-        testCreateNewUser();
+        User aUser = new User();
+        aUser.setEmail("utestUser@yahoo.com");
+        aUser.setPassword("utest");
+        aUser.setfName("uTest fName");
+        aUser.setlName("uTest lName");
+        userDao.createNewUser(aUser);
         int id = userDao.getUser("utestUser@yahoo.com", "utest").getId();
         userDao.deleteUserWithId(id);
         User dbUser = userDao.getUser("utestUser@yahoo.com", "utest");
