@@ -42,7 +42,12 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public User getUser(int userId) {
-        return userDao.getUser(userId);
+        User aUser = new User();
+        aUser = userDao.getUser(userId);
+        if (aUser != null) {
+            aUser.setCardGroups(cardGroupManager.getCardGroupsForUser(aUser.getEmail()));
+        }
+        return aUser;
     }
 
     @Override

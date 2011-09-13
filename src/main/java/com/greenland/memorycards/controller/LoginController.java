@@ -41,6 +41,8 @@ public class LoginController implements Controller {
             request.getSession().setAttribute("user", user);
         } else {
             user = (User)request.getSession().getAttribute("user");
+            // Updating user with new groups, cards etc.
+            user = userManager.getUser(user.getId());
         }
         return new ModelAndView("home", "user", user);
     }

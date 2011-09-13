@@ -10,6 +10,8 @@ create table if not exists GROUPS(
 ID INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
 GROUPNAME VARCHAR(255) NOT NULL,
 DESCRIPTION VARCHAR(255),
+CREATIONDATE TIMESTAMP DEFAULT 0,
+UPDATEDATE TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 CONSTRAINT nameConstraint UNIQUE (GROUPNAME));
 --syntax verified on local
 create table if not exists USERGROUP(
@@ -31,23 +33,23 @@ CARDID INTEGER,
 FOREIGN KEY(GROUPID) REFERENCES GROUPS(ID),
 FOREIGN KEY(CARDID) REFERENCES CARD(ID));
 --syntax verified on local
-INSERT INTO USERS VALUES(1,'dima_ir@mail.ru','12345678','Dima','Barankin');
-INSERT INTO USERS VALUES(2,'test@mail.ru','test','Tester','Testerov');
-INSERT INTO USERS VALUES(3,'elkrumina@gmail.com','12345678','Miloe','Sonyshka');
-INSERT INTO USERS VALUES(4,'other@mail.ru','12345678','Igorj','Petrushkin');
-INSERT INTO GROUPS VALUES(1,'Java Prep Exam','Cards Used to prepare for Java Programmers Exam');
-INSERT INTO GROUPS VALUES(2,'Java Prep Exam1','Cards Used to prepare for Java Programmers Exam');
-INSERT INTO GROUPS VALUES(3,'Java Prep Exam2','Cards Used to prepare for Java Programmers Exam');
+INSERT INTO USERS VALUES(NULL,'dima@yahoo.com','12345678','Dima','Barankin');
+INSERT INTO USERS VALUES(NULL,'test@mail.ru','test','Tester','Testerov');
+INSERT INTO USERS VALUES(NULL,'test@gmail.com','12345678','Jerry','Black');
+INSERT INTO USERS VALUES(NULL,'other@mail.ru','12345678','Igorj','Petrushkin');
+INSERT INTO GROUPS VALUES(NULL,'Java Prep Exam','Cards Used to prepare for Java Programmers Exam',NULL,NULL);
+INSERT INTO GROUPS VALUES(NULL,'Java Prep Exam1','Cards Used to prepare for Java Programmers Exam',NULL,NULL);
+INSERT INTO GROUPS VALUES(NULL,'Java Prep Exam2','Cards Used to prepare for Java Programmers Exam',NULL,NULL);
 INSERT INTO USERGROUP VALUES(2,1);
 INSERT INTO USERGROUP VALUES(2,2);
 INSERT INTO USERGROUP VALUES(2,3);
-INSERT INTO CARD VALUES(1,'2+2=?','int a=2;\t int b=2;\t int c=a+b;','4','int c=4;');
-INSERT INTO CARD VALUES(2,'1+2=?','int a=1;\t int b=2;\t int c=a+b;','3','int c=3;');
-INSERT INTO CARD VALUES(3,'3+2=?','int a=3;\t int b=2;\t int c=a+b;','5','int c=5;');
-INSERT INTO CARD VALUES(4,'4+2=?','int a=4;\t int b=2;\t int c=a+b;','6','int c=6;');
-INSERT INTO CARD VALUES(5,'5+2=?','int a=5;\t int b=2;\t int c=a+b;','7','int c=7;');
-INSERT INTO CARD VALUES(6,'6+2=?','int a=6;\t int b=2;\t int c=a+b;','8','int c=8;');
-INSERT INTO CARD VALUES(7,'7+2=?','int a=7;\t int b=2;\t int c=a+b;','9','int c=9;');
+INSERT INTO CARD VALUES(NULL,'2+2=?','int a=2;\t int b=2;\t int c=a+b;','4','int c=4;');
+INSERT INTO CARD VALUES(NULL,'1+2=?','int a=1;\t int b=2;\t int c=a+b;','3','int c=3;');
+INSERT INTO CARD VALUES(NULL,'3+2=?','int a=3;\t int b=2;\t int c=a+b;','5','int c=5;');
+INSERT INTO CARD VALUES(NULL,'4+2=?','int a=4;\t int b=2;\t int c=a+b;','6','int c=6;');
+INSERT INTO CARD VALUES(NULL,'5+2=?','int a=5;\t int b=2;\t int c=a+b;','7','int c=7;');
+INSERT INTO CARD VALUES(NULL,'6+2=?','int a=6;\t int b=2;\t int c=a+b;','8','int c=8;');
+INSERT INTO CARD VALUES(NULL,'7+2=?','int a=7;\t int b=2;\t int c=a+b;','9','int c=9;');
 INSERT INTO GROUPCARD VALUES(1,1);
 INSERT INTO GROUPCARD VALUES(1,2);
 INSERT INTO GROUPCARD VALUES(1,3);
