@@ -55,7 +55,7 @@ public class CardGroupManagerImpl implements CardGroupManager{
     }
 
     @Override
-    public CardGroup getCardGroup(int cardGroupId) {
+    public CardGroup getCardGroupWithId(int cardGroupId) {
         CardGroup cardGroup = new CardGroup();
         cardGroup = cardGroupDao.getCardGroup(cardGroupId);
         cardGroup.setCardList(cardManager.getAllCardsForGroup(cardGroupId));

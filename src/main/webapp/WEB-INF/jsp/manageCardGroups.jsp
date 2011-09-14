@@ -44,9 +44,8 @@
             <tr>
                 <td class="groupName">${group.groupName}</td>
                 <td>${group.description}</td>
-                <td>${group.creationDate}</td>
-                <td>${group.updateDate}</td>
-                <td width="1" bgcolor="#008000"><BR></td>
+                <td class="date">${group.creationDate}</td>
+                <td class="date">${group.updateDate}</td>
                 <td><a href="manageGroups.do?edit=${group.id}">Edit</a>&nbsp;<a href="manageGroups.do?delete=${group.id}">Delete</a>&nbsp;<a href="manageGroups.do?create=true">Create</a></td>
             </tr>
         </c:forEach>

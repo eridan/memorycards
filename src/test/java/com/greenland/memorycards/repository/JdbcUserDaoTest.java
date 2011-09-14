@@ -73,7 +73,7 @@ public class JdbcUserDaoTest extends AbstractTransactionalDataSourceSpringContex
     public void testGetAllUsers() {
         System.out.println("getAllUsers");
         List result = userDao.getAllUsers();
-        int usersInDB = 4;
+        int usersInDB = 5;
         assertEquals(usersInDB, result.size());
     }
 

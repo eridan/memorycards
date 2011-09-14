@@ -27,7 +27,7 @@ public class CardManagerImpl implements CardManager{
 
     @Override
     public List<Card> getAllCardsForGroup(int id) {
-        logger.info("Getting cards for group id: "+id);
+//        logger.info("Getting cards for group id: "+id);
         return cardDao.getAllCardsForGroup(id);
     }
     

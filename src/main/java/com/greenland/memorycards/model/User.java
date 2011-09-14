@@ -6,6 +6,7 @@ package com.greenland.memorycards.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -80,4 +81,38 @@ public class User implements Serializable{
         return "User ("+ id +", " + email +", " + password +", " + fName +", " + lName +")";
     }
     
+    // Not very elegant. Perhaps, there is a better way. TODO: Refactor
+    @Override
+    public boolean equals(Object otherUser) {
+
+        boolean cardGroupsEqual = false;
+
+        //check for self-comparison
+        if (this == otherUser) {
+            return true;
+        }
+
+        if (otherUser instanceof User) {
+            User user = (User) otherUser;
+
+            if (this.cardGroups != null && user.getCardGroups() != null) {
+                CardGroup[] cardGroupArray = (CardGroup[]) this.cardGroups.toArray(new CardGroup[this.cardGroups.size()]);
+                CardGroup[] otherCardGroupArray = (CardGroup[]) user.getCardGroups().toArray(new CardGroup[user.getCardGroups().size()]);
+                cardGroupsEqual = Arrays.equals(cardGroupArray, otherCardGroupArray) ? true : false;
+            } else if (this.cardGroups == null && user.getCardGroups() == null) {
+                cardGroupsEqual = true;
+            } else {
+                cardGroupsEqual = false;
+            }
+
+            if ((this.id == user.getId())
+                    && (this.email == null && user.getEmail() == null || this.email.equals(user.getEmail()))
+                    && (this.fName == null && user.getfName() == null) || this.fName.equals(user.getfName())
+                    && (this.lName == null && user.getlName() == null) || this.lName.equals(user.getlName())
+                    && (cardGroupsEqual)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

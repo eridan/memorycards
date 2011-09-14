@@ -15,7 +15,7 @@ public interface CardGroupManager {
     
     List<CardGroup> getCardGroupsForUser (String email);
 
-    public CardGroup getCardGroup(int cardGroupId);
+    public CardGroup getCardGroupWithId(int cardGroupId);
 
     public void updateCardGroup(CardGroup updatedCardGroup);
 

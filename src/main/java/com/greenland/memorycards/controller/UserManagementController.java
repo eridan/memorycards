@@ -60,7 +60,7 @@ public class UserManagementController implements Controller {
             if (actionName.equalsIgnoreCase("actionupdate")) {
                 update = true;
             }
-            logger.info("Action name: " + actionName);
+//            logger.info("Action name: " + actionName);
         }
 
         // Displaying forms
@@ -106,8 +106,6 @@ public class UserManagementController implements Controller {
 
         if (delete) {
             logger.info("Deleting ...");
-            System.out.println("User to delete: " + model.get("userToDelete"));
-            System.out.println("ID = " + Integer.valueOf(request.getParameter("actiondelete")));
             userManager.deleteUserWithId(Integer.valueOf(request.getParameter("actiondelete")));
         }
 

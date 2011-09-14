@@ -5,9 +5,11 @@
 package com.greenland.memorycards.repository;
 
 import com.greenland.memorycards.model.CardGroup;
+import com.greenland.memorycards.util.DateTimeConverter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -132,8 +134,8 @@ public class JdbcCardGroupDao extends SimpleJdbcDaoSupport implements CardGroupD
             group.setId(rs.getInt("id"));
             group.setGroupName(rs.getString("groupname"));
             group.setDescription(rs.getString("description"));
-            group.setCreationDate(rs.getDate("creationDate"));
-            group.setUpdateDate(rs.getDate("updateDate"));
+            group.setCreationDate(rs.getString("creationDate"));
+            group.setUpdateDate(rs.getString("updateDate"));
             return group;
         }
     }

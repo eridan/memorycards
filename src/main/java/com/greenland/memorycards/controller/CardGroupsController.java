@@ -25,26 +25,24 @@ import org.springframework.web.servlet.mvc.Controller;
  *
  * @author jurijspe
  */
-public class CardGroupsController implements Controller{
-    
+public class CardGroupsController implements Controller {
+
     private CardGroupManager cardGroupManager;
 
     public void setCardGroupManager(CardGroupManager cardGroupManager) {
         this.cardGroupManager = cardGroupManager;
     }
-    
     protected final Log logger = LogFactory.getLog(getClass());
-    
+
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException { 
+            throws ServletException, IOException {
         logger.info("Card Group Manager Controller");
-        
+
         // The below code smells. TODO: Refactor
-        
-        logger.info("User Management Controller");
-        User appUser = (User)request.getSession().getAttribute("user");
-        
+
+        User appUser = (User) request.getSession().getAttribute("user");
+
         Map<String, Object> model = new HashMap<String, Object>();
         boolean create = false;
         boolean delete = false;
@@ -63,7 +61,7 @@ public class CardGroupsController implements Controller{
             if (actionName.equalsIgnoreCase("actionupdate")) {
                 update = true;
             }
-            logger.info("Action name: " + actionName);
+//            logger.info("Action name: " + actionName);
         }
 
         // Displaying forms
@@ -72,7 +70,7 @@ public class CardGroupsController implements Controller{
             logger.info("Editing cardGroup (id=" + request.getParameter(actionName) + ")");
             int cardGroupId = Integer.valueOf(request.getParameter(actionName));
             CardGroup cardGroupToEdit = new CardGroup();
-            cardGroupToEdit = cardGroupManager.getCardGroup(cardGroupId);
+            cardGroupToEdit = cardGroupManager.getCardGroupWithId(cardGroupId);
             model.put("cardGroupToEdit", (CardGroup) cardGroupToEdit);
         }
 
@@ -80,7 +78,7 @@ public class CardGroupsController implements Controller{
             logger.info("Deleting cardGroup (id=" + request.getParameter(actionName) + ")");
             int cardGroupId = Integer.valueOf(request.getParameter(actionName));
             CardGroup cardGroupToDelete = new CardGroup();
-            cardGroupToDelete = cardGroupManager.getCardGroup(cardGroupId);
+            cardGroupToDelete = cardGroupManager.getCardGroupWithId(cardGroupId);
             model.put("cardGroupToDelete", (CardGroup) cardGroupToDelete);
         }
 
@@ -94,7 +92,7 @@ public class CardGroupsController implements Controller{
         if (update) {
             logger.info("Updating ... ");
             CardGroup cardGroupToBeUpdated = new CardGroup();
-            cardGroupToBeUpdated = cardGroupManager.getCardGroup(Integer.valueOf(request.getParameter("actionupdate")));
+            cardGroupToBeUpdated = cardGroupManager.getCardGroupWithId(Integer.valueOf(request.getParameter("actionupdate")));
 
             // Could use formBacking Object instead. TODO: Refactor
             CardGroup formCardGroup = new CardGroup();
@@ -118,14 +116,10 @@ public class CardGroupsController implements Controller{
             formCardGroup.setDescription((String) request.getParameter("description"));
             cardGroupManager.createNewCardGroupForUserId(appUser.getId(), formCardGroup);
         }
-        
-        
-        
+
         List<CardGroup> cardGroups = new ArrayList<CardGroup>();
         cardGroups = cardGroupManager.getCardGroupsForUser(appUser.getEmail());
         model.put("cardGroups", cardGroups);
         return new ModelAndView("manageCardGroups", "model", model);
     }
-    
 }
-
