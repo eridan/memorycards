@@ -121,6 +121,7 @@ public class UserManagementController implements Controller {
 
         // Display all USERS
         user = (User) request.getSession().getAttribute("user");
+        
         List<User> userList = new ArrayList<User>();
         userList = userManager.getAllUsers();
         model.put("userList", userList);

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8084/MemoryCards-2.0/" />
+<title>CardGroupManagementTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CardGroupManagementTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/MemoryCards-2.0/index.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=email</td>
+	<td>test@mail.ru</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=password</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>MEmorizeME</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Tester Testerov</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Help</td>
+	<td>Help</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=About</td>
+	<td>About</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Logout</td>
+	<td>Logout</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Question</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Answer</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>id=cardsTable.0.0</td>
+	<td>Question</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Manage Groups</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Description</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Creation Date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Update Date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Edit</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Delete</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>link=Create</td>
+	<td>Create</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='content']/form/table.0.0</td>
+	<td>Group Name</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Group Name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//form/table/tbody/tr[2]/td</td>
+	<td>Description</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=groupName</td>
+	<td>Selenium Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=description</td>
+	<td>test description</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Selenium Test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>test description</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='aTable']/tbody/tr[8]/td[2]</td>
+	<td>test description</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='aTable']/tbody/tr[8]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=groupName</td>
+	<td>Selenium Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=description</td>
+	<td>updated desc</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='aTable']/tbody/tr[8]/td</td>
+	<td>Selenium Test</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='aTable']/tbody/tr[8]/td[2]</td>
+	<td>updated desc</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='aTable']/tbody/tr[8]/td[5]/a[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='aTable']/tbody/tr[8]/td[5]/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='content']/form/table.0.0</td>
+	<td>Group Name</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Selenium Test</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='content']/form/table.1.0</td>
+	<td>Description</td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='content']/form/table.1.1</td>
+	<td>updated desc</td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='content']/form/table.2.0</td>
+	<td>Creation Date</td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='content']/form/table.3.0</td>
+	<td>Update Date</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>&quot;Selenium Test&quot; Cards</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>id=cardsTable.0.0</td>
+	<td>Question</td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>id=cardsTable.0.1</td>
+	<td>Answer</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>MEmorizeME</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>exact:Email:</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

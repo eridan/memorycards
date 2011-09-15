@@ -87,12 +87,16 @@ public class UserManagementControllerTest {
                 users.add(user2);
                 users.add(user3);
 
-                allowing(userManager).getAllUsers();
+                oneOf(userManager).getAllUsers();
                 will(returnValue(users));
-                allowing(userManager).getUser(0);
+                oneOf(userManager).getUser(0);
                 will(returnValue(user));
-                allowing(userManager).getUser(2);
+                oneOf(userManager).getUser(1);
+                will(returnValue(user1));
+                oneOf(userManager).getUser(2);
                 will(returnValue(user2));
+                oneOf(userManager).getUser(3);
+                will(returnValue(user3));
             }
         });
         controller.setUserManager(userManager);
@@ -118,7 +122,9 @@ public class UserManagementControllerTest {
         Assert.assertNotNull(users);
         Assert.assertEquals(4, users.size());
         Assert.assertEquals("fName2", users.get(2).getfName());
-        userManagerMock.assertIsSatisfied();
+        Assert.assertEquals("lName", users.get(0).getlName());
+        Assert.assertEquals("password3", users.get(3).getPassword());
+        Assert.assertEquals("fName1", users.get(1).getfName());
     }
 
     /**
@@ -134,13 +140,19 @@ public class UserManagementControllerTest {
         Assert.assertEquals("manageUsers", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
         Map<String, Object> model = (HashMap<String, Object>) mav.getModel().get("model");
+        List<User> users = (List<User>) model.get("userList");
+        Assert.assertNotNull(users);
+        Assert.assertEquals(4, users.size());
+        Assert.assertEquals("fName2", users.get(2).getfName());
+        Assert.assertEquals("lName", users.get(0).getlName());
+        Assert.assertEquals("password3", users.get(3).getPassword());
+        Assert.assertEquals("fName1", users.get(1).getfName());
         User user = (User) model.get("userToEdit");
         Assert.assertNotNull(user);
         Assert.assertEquals("email@mail.com", user.getEmail());
         Assert.assertEquals("password", user.getPassword());
         Assert.assertEquals("fName", user.getfName());
         Assert.assertEquals("lName", user.getlName());
-        userManagerMock.assertIsSatisfied();
     }
 
     /**
@@ -156,13 +168,19 @@ public class UserManagementControllerTest {
         Assert.assertEquals("manageUsers", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
         Map<String, Object> model = (HashMap<String, Object>) mav.getModel().get("model");
+        List<User> users = (List<User>) model.get("userList");
+        Assert.assertNotNull(users);
+        Assert.assertEquals(4, users.size());
+        Assert.assertEquals("fName2", users.get(2).getfName());
+        Assert.assertEquals("lName", users.get(0).getlName());
+        Assert.assertEquals("password3", users.get(3).getPassword());
+        Assert.assertEquals("fName1", users.get(1).getfName());
         User user = (User) model.get("userToDelete");
         Assert.assertNotNull(user);
         Assert.assertEquals("email@mail2.com", user.getEmail());
         Assert.assertEquals("password2", user.getPassword());
         Assert.assertEquals("fName2", user.getfName());
         Assert.assertEquals("lName2", user.getlName());
-        userManagerMock.assertIsSatisfied();
     }
 
     /**
@@ -178,61 +196,145 @@ public class UserManagementControllerTest {
         Assert.assertEquals("manageUsers", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
         Map<String, Object> model = (HashMap<String, Object>) mav.getModel().get("model");
+        List<User> users = (List<User>) model.get("userList");
+        Assert.assertNotNull(users);
+        Assert.assertEquals(4, users.size());
+        Assert.assertEquals("fName2", users.get(2).getfName());
+        Assert.assertEquals("lName", users.get(0).getlName());
+        Assert.assertEquals("password3", users.get(3).getPassword());
+        Assert.assertEquals("fName1", users.get(1).getfName());
         User user = (User) model.get("userToCreate");
         Assert.assertNotNull(user);
-        userManagerMock.assertIsSatisfied();
     }
 
-    /**
-     * Test of testEditUser.
-     */
-//    @Test
-//    public void testEditUser() throws Exception {
-//        userManagerMock = new JUnit4Mockery();
-//        userManager = userManagerMock.mock(UserManager.class);
-//        controller = new UserManagementController();
-//        request = new MockHttpServletRequest();
-//        response = new MockHttpServletResponse();
-//
-//        // define expectations for mock object
-//        userManagerMock.checking(new Expectations() {
-//
-//            {
-//                User user1 = new User();
-//                user1.setId(1);
-//                user1.setEmail("email@mail1.com");
-//                user1.setPassword("password1");
-//                user1.setfName("fName1");
-//                user1.setlName("lName1");
-//
-//                User updatedUser = new User();
-//                updatedUser.setEmail("abc@gmail.com");
-//                updatedUser.setPassword("abc");
-//                updatedUser.setfName("abcName");
-//                updatedUser.setlName("abcLName");
-//
-//                allowing(userManager).combineUsers(user1, updatedUser);
-//                will(returnValue(updatedUser));
-//                allowing(userManager).updateUser(updatedUser);
-//            }
-//        });
-//
-//        controller.setUserManager(userManager);
-//        
-//        System.out.println("Testing Users actionupdate");
-//        request.setMethod("POST");
-//        request.setParameter("actionupdate", "1");
-//        request.setParameter("email", "abc@gmail.com");
-//        request.setParameter("password", "abc");
-//        request.setParameter("userFName", "abcName");
-//        request.setParameter("userLName", "abcLName");
-//
-//        ModelAndView mav = controller.handleRequest(request, response);
-//        Assert.assertEquals("manageUsers", mav.getViewName());
-//        Assert.assertNotNull(mav.getModel());
-//        Map<String, Object> model = (HashMap<String, Object>) mav.getModel().get("model");
-//        User user = (User) model.get("userToEdit");
-//        Assert.assertNull(user);
-//        userManagerMock.assertIsSatisfied();
-//    }
+    @Test
+    public void testUserActionCreate() throws Exception {
+
+        userManagerMock.checking(new Expectations() {
+
+            {
+                User newUser = new User();
+                newUser.setEmail("NewEmail@mail.com");
+                newUser.setPassword("newpassw0rd");
+                newUser.setfName("New First Name");
+                newUser.setlName("New Last Name");
+                //checking if Create Method was called
+                oneOf(userManager).createNewUser(with(equal(newUser)));
+
+            }
+        });
+
+        System.out.println("Testing if User IS Created");
+        request.getSession().setAttribute("user", userManager.getUser(0));
+        request.setParameter("actioncreate", "true");
+        request.setParameter("email", "NewEmail@mail.com");
+        request.setParameter("password", "newpassw0rd");
+        request.setParameter("userFName", "New First Name");
+        request.setParameter("userLName", "New Last Name");
+        ModelAndView mav = controller.handleRequest(request, response);
+        Assert.assertEquals("manageUsers", mav.getViewName());
+        Assert.assertNotNull(mav.getModel());
+        Map<String, Object> model = new HashMap<String, Object>();
+        model = (HashMap<String, Object>) mav.getModel().get("model");
+        // Checking if ALL Users are displayed
+        List<User> users = (List<User>) model.get("userList");
+        Assert.assertNotNull(users);
+        Assert.assertEquals(4, users.size());
+        Assert.assertEquals("fName2", users.get(2).getfName());
+        Assert.assertEquals("lName", users.get(0).getlName());
+        User user = new User();
+        user = (User) model.get("userToEdit");
+        Assert.assertNull(user);
+        user = (User) model.get("userToDelete");
+        Assert.assertNull(user);
+        user = (User) model.get("userToCreate");
+        Assert.assertNull(user);
+    }
+
+    @Test
+    public void testUserActionUpdate() throws Exception {
+
+        userManagerMock.checking(new Expectations() {
+
+            {
+                User user2 = new User();
+                user2.setId(2);
+                user2.setEmail("email@mail2.com");
+                user2.setPassword("password2");
+                user2.setfName("fName2");
+                user2.setlName("lName2");
+                User newUser = new User();
+                newUser.setId(2);
+                newUser.setEmail("NewEmail@mail.com");
+                newUser.setPassword("password2");
+                newUser.setfName("New First Name");
+                newUser.setlName("New Last Name");
+                //checking if Create Method was called
+                oneOf(userManager).updateUser(with(equal(newUser)));
+                oneOf(userManager).combineUsers(with(equal(user2)), with(equal(newUser)));
+                will(returnValue(newUser));
+
+            }
+        });
+
+        System.out.println("Testing if User IS Updated");
+        request.getSession().setAttribute("user", userManager.getUser(0));
+        request.setParameter("actionupdate", "2");
+        request.setParameter("email", "NewEmail@mail.com");
+        request.setParameter("userFName", "New First Name");
+        request.setParameter("userLName", "New Last Name");
+        ModelAndView mav = controller.handleRequest(request, response);
+        Assert.assertEquals("manageUsers", mav.getViewName());
+        Assert.assertNotNull(mav.getModel());
+        Map<String, Object> model = new HashMap<String, Object>();
+        model = (HashMap<String, Object>) mav.getModel().get("model");
+        // Checking if ALL Users are displayed
+        List<User> users = (List<User>) model.get("userList");
+        Assert.assertNotNull(users);
+        Assert.assertEquals(4, users.size());
+        Assert.assertEquals("fName2", users.get(2).getfName());
+        Assert.assertEquals("lName", users.get(0).getlName());
+        User user = new User();
+        user = (User) model.get("userToEdit");
+        Assert.assertNull(user);
+        user = (User) model.get("userToDelete");
+        Assert.assertNull(user);
+        user = (User) model.get("userToCreate");
+        Assert.assertNull(user);
+    }
+
+    @Test
+    public void testUserActionDelete() throws Exception {
+
+        userManagerMock.checking(new Expectations() {
+
+            {
+                //checking if Create Method was called
+                oneOf(userManager).deleteUserWithId(with(equal(3)));
+
+            }
+        });
+
+        System.out.println("Testing if User IS Deleted");
+        request.getSession().setAttribute("user", userManager.getUser(0));
+        request.setParameter("actiondelete", "3");
+        ModelAndView mav = controller.handleRequest(request, response);
+        Assert.assertEquals("manageUsers", mav.getViewName());
+        Assert.assertNotNull(mav.getModel());
+        Map<String, Object> model = new HashMap<String, Object>();
+        model = (HashMap<String, Object>) mav.getModel().get("model");
+        // Checking if ALL Users are displayed
+        List<User> users = (List<User>) model.get("userList");
+        Assert.assertNotNull(users);
+        Assert.assertEquals(4, users.size());
+        Assert.assertEquals("fName2", users.get(2).getfName());
+        Assert.assertEquals("lName", users.get(0).getlName());
+        User user = new User();
+        user = (User) model.get("userToEdit");
+        Assert.assertNull(user);
+        user = (User) model.get("userToDelete");
+        Assert.assertNull(user);
+        user = (User) model.get("userToCreate");
+        Assert.assertNull(user);
+    }
 }
