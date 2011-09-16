@@ -134,6 +134,11 @@ body {
 #content {
     margin-top: 40px;
     background: #FCFCFC;
+    padding: 5px;
+}
+
+#content h1 {
+    text-align: center;
 }
 
 #cardsTable {
@@ -142,6 +147,11 @@ body {
     color: black;
     clear: both;
     min-height: 302px;
+}
+
+#cardsTable caption {
+    color: #008000;
+    padding: 0 0 10px;
 }
 
 #mobileView {
@@ -157,6 +167,7 @@ footer {
     border: 1px dotted #008000;
     background: #FCFCFC;
     padding: 10px;
+    margin: 10px;
 }
 
 #aTable td {
@@ -194,7 +205,6 @@ a:hover {
     background: #FFFFE5;
     border: 1px dotted #008000;
     color: #CC6666;
-    margin: 20px;
     padding: 10px;
     font-size: 18px;
     font-style: italic;
@@ -228,6 +238,8 @@ a:hover {
         );
     -webkit-border-top-left-radius:5px;
     -webkit-border-top-right-radius:5px;
+    display: block;
+    text-align: center;
 }
 
 #pageButton a {

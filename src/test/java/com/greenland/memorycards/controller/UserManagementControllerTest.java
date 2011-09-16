@@ -337,4 +337,5 @@ public class UserManagementControllerTest {
         user = (User) model.get("userToCreate");
         Assert.assertNull(user);
     }
+
 }

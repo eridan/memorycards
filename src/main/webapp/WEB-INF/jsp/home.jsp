@@ -6,10 +6,10 @@
         <c:if test="${fn:containsIgnoreCase(header['User-Agent'],'Windows') || 
                       fn:containsIgnoreCase(header['User-Agent'],'Unix') ||
                       fn:containsIgnoreCase(header['User-Agent'],'Linux')}">
-            <style type="text/css" title="currentStyle">
-                @import "css/tabs.css";
-                @import "css/demo_table.css";
-            </style>
+              <style type="text/css" title="currentStyle">
+                  @import "css/tabs.css";
+                  @import "css/demo_table.css";
+              </style>
         </c:if>
         <c:if test="${
               fn:containsIgnoreCase(header['User-Agent'],'iPod') || 
@@ -52,38 +52,46 @@
 
     <body>
         <div id="content">
+            <c:choose>
+                <c:when test="${empty user.cardGroups}">
+                    <section id="warning">No Card Groups yet created. Please go to Manage Groups (Extras -> Manage Groups) to Create them ...</section>
+                </c:when>
+                <c:otherwise>
 
-            <!-- Tabs -->
-            <div id="tabs">
-                <ul>
-                    <c:forEach items="${user.cardGroups}" var="group">
-                        <li><a href="#${group.id}">${group.groupName}</a></li>
-                    </c:forEach>
-                </ul>
+                    <!-- Tabs -->
+                    <div id="tabs">
+                        <ul>
+                            <c:forEach items="${user.cardGroups}" var="group">
+                                <li><a href="#${group.id}">${group.groupName}</a></li>
+                            </c:forEach>
+                        </ul>
 
 
-                <c:forEach items="${user.cardGroups}" var="group" varStatus="status">
-                    <div id="${group.id}">
-
-                        <table class="display" id="cardsTable">
-                            <thead> 
-                                <tr> 
-                                    <th>Question</th> 
-                                    <th>Answer</th>
-                                </tr> 
-                            </thead> 
-                            <tbody>
-                                <c:forEach items="${group.cardList}" var="card">
-                                    <tr class="gradeA">
-                                        <td>${card.question}<p>${card.questionCode}</p></td>
-                                        <td>${card.answer}<p>${card.answerCode}</p></td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
+                        <c:forEach items="${user.cardGroups}" var="group" varStatus="status">
+                            <div id="${group.id}">
+                                <table class="display" id="cardsTable">
+                                    <caption>${group.description}</caption>
+                                    <thead> 
+                                        <tr> 
+                                            <th>Question</th> 
+                                            <th>Answer</th>
+                                        </tr> 
+                                    </thead> 
+                                    <tbody>
+                                        <c:forEach items="${group.cardList}" var="card">
+                                            <tr class="gradeA">
+                                                <td>${card.question}<p>${card.questionCode}</p></td>
+                                                <td>${card.answer}<p>${card.answerCode}</p></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:forEach>
                     </div>
-                </c:forEach>
-            </div>
+                </c:otherwise>
+            </c:choose>
+
         </div>
 
         <div id="mobileView">
