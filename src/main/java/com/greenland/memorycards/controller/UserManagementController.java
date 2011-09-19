@@ -66,6 +66,8 @@ public class UserManagementController implements Controller {
         boolean delete = false;
         boolean update = false;
 
+        create=actionName.equalsIgnoreCase("actioncreate")?true:false;
+        
         if (actionName.equalsIgnoreCase("actioncreate")) {
             create = true;
         }
