@@ -17,10 +17,9 @@
                 <td class="groupName">${user.email}</td>
                 <td>${user.fName}&nbsp;${user.lName}</td>
                 <td>
-                    <a href="manageUsers.do?edit=${user.id}">Edit</a>&nbsp;
-                    <a href="manageUsers.do?delete=${user.id}">Delete</a>&nbsp;
-                    <a href="manageUsers.do?create=true">Create</a>&nbsp;
-                    <a href="manageGroups.do?addGroup=${user.id}">Add Group</a>
+                    <a href="manageUsers.do?action=edit&id=${user.id}">Edit</a>&nbsp;
+                    <a href="manageUsers.do?action=delete&id=${user.id}">Delete</a>&nbsp;
+                    <a href="manageUsers.do?action=create">Create</a>&nbsp;
                 </td>
             </tr>
         </c:forEach>
@@ -29,7 +28,7 @@
     <c:if test="${model.userToEdit != null}">
         <section id="warning">Please manage Users with extreme care, your changes can not be undone ...</section>
         <br />
-        <form action="manageUsers.do?actionupdate=${model.userToEdit.id}" method="POST">
+        <form action="manageUsers.do?action=actionupdate&id=${model.userToEdit.id}" method="POST">
             <table id="aTable">
                 <tr>
                     <td><fmt:message key="loginEmail"/></td>
@@ -61,7 +60,7 @@
     <c:if test="${model.userToDelete != null}">
         <section id="warning">Please manage Users with extreme care, your changes can not be undone ...</section>
         <br />
-        <form action="manageUsers.do?actiondelete=${model.userToDelete.id}" method="POST">
+        <form action="manageUsers.do?action=actiondelete&id=${model.userToDelete.id}" method="POST">
             <table id="aTable">
                 <tr>
                     <td><fmt:message key="loginEmail"/></td>
@@ -87,7 +86,7 @@
 
     <c:if test="${model.userToCreate != null}">
         <br />
-        <form action="manageUsers.do?actioncreate" method="POST">
+        <form action="manageUsers.do?action=actioncreate" method="POST">
             <table id="aTable">
                 <tr>
                     <td><fmt:message key="loginEmail"/></td>
@@ -115,7 +114,6 @@
             </table>
         </form>
     </c:if>
-
 </div>
 
 <section id="pageButton"><a href="login.do"><-- Go to Home Page</a></section>

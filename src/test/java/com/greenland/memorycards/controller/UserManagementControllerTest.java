@@ -87,16 +87,8 @@ public class UserManagementControllerTest {
                 users.add(user2);
                 users.add(user3);
 
-                oneOf(userManager).getAllUsers();
+                exactly(1).of(userManager).getAllUsers();
                 will(returnValue(users));
-                oneOf(userManager).getUser(0);
-                will(returnValue(user));
-                oneOf(userManager).getUser(1);
-                will(returnValue(user1));
-                oneOf(userManager).getUser(2);
-                will(returnValue(user2));
-                oneOf(userManager).getUser(3);
-                will(returnValue(user3));
             }
         });
         controller.setUserManager(userManager);
@@ -125,6 +117,7 @@ public class UserManagementControllerTest {
         Assert.assertEquals("lName", users.get(0).getlName());
         Assert.assertEquals("password3", users.get(3).getPassword());
         Assert.assertEquals("fName1", users.get(1).getfName());
+        userManagerMock.assertIsSatisfied();
     }
 
     /**
@@ -133,9 +126,24 @@ public class UserManagementControllerTest {
     @Test
     public void testShowUserToEdit() throws Exception {
 
+        userManagerMock.checking(new Expectations() {
+
+            {
+                User user = new User();
+                user.setId(0);
+                user.setEmail("email@mail.com");
+                user.setPassword("password");
+                user.setfName("fName");
+                user.setlName("lName");
+                oneOf(userManager).getUser(0);
+                will(returnValue(user));
+            }
+        });
+
         System.out.println("Testing Edit user displayed");
         request.setMethod("POST");
-        request.setParameter("edit", "0");
+        request.setParameter("action", "edit");
+        request.setParameter("id", "0");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageUsers", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
@@ -153,6 +161,7 @@ public class UserManagementControllerTest {
         Assert.assertEquals("password", user.getPassword());
         Assert.assertEquals("fName", user.getfName());
         Assert.assertEquals("lName", user.getlName());
+        userManagerMock.assertIsSatisfied();
     }
 
     /**
@@ -160,10 +169,25 @@ public class UserManagementControllerTest {
      */
     @Test
     public void testShowUserToDelete() throws Exception {
+        
+        userManagerMock.checking(new Expectations() {
+
+            {
+                User user = new User();
+                user.setId(2);
+                user.setEmail("email@mail2.com");
+                user.setPassword("password2");
+                user.setfName("fName2");
+                user.setlName("lName2");
+                exactly(1).of(userManager).getUser(2);
+                will(returnValue(user));
+            }
+        });
 
         System.out.println("Testing Delete user displayed");
         request.setMethod("POST");
-        request.setParameter("delete", "2");
+        request.setParameter("action", "delete");
+        request.setParameter("id", "2");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageUsers", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
@@ -181,6 +205,7 @@ public class UserManagementControllerTest {
         Assert.assertEquals("password2", user.getPassword());
         Assert.assertEquals("fName2", user.getfName());
         Assert.assertEquals("lName2", user.getlName());
+        userManagerMock.assertIsSatisfied();
     }
 
     /**
@@ -191,7 +216,7 @@ public class UserManagementControllerTest {
 
         System.out.println("Testing Create user form displayed");
         request.setMethod("POST");
-        request.setParameter("create", "true");
+        request.setParameter("action", "create");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageUsers", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
@@ -205,28 +230,28 @@ public class UserManagementControllerTest {
         Assert.assertEquals("fName1", users.get(1).getfName());
         User user = (User) model.get("userToCreate");
         Assert.assertNotNull(user);
+        userManagerMock.assertIsSatisfied();
     }
-
+    
     @Test
     public void testUserActionCreate() throws Exception {
 
         userManagerMock.checking(new Expectations() {
 
             {
+
                 User newUser = new User();
                 newUser.setEmail("NewEmail@mail.com");
                 newUser.setPassword("newpassw0rd");
                 newUser.setfName("New First Name");
                 newUser.setlName("New Last Name");
                 //checking if Create Method was called
-                oneOf(userManager).createNewUser(with(equal(newUser)));
-
+                one(userManager).createNewUser(with(equal(newUser)));
             }
         });
 
         System.out.println("Testing if User IS Created");
-        request.getSession().setAttribute("user", userManager.getUser(0));
-        request.setParameter("actioncreate", "true");
+        request.setParameter("action", "actioncreate");
         request.setParameter("email", "NewEmail@mail.com");
         request.setParameter("password", "newpassw0rd");
         request.setParameter("userFName", "New First Name");
@@ -249,8 +274,8 @@ public class UserManagementControllerTest {
         Assert.assertNull(user);
         user = (User) model.get("userToCreate");
         Assert.assertNull(user);
+        userManagerMock.assertIsSatisfied();
     }
-
     @Test
     public void testUserActionUpdate() throws Exception {
 
@@ -269,7 +294,8 @@ public class UserManagementControllerTest {
                 newUser.setPassword("password2");
                 newUser.setfName("New First Name");
                 newUser.setlName("New Last Name");
-                //checking if Create Method was called
+                oneOf(userManager).getUser(2);
+                will(returnValue(user2));
                 oneOf(userManager).updateUser(with(equal(newUser)));
                 oneOf(userManager).combineUsers(with(equal(user2)), with(equal(newUser)));
                 will(returnValue(newUser));
@@ -278,8 +304,8 @@ public class UserManagementControllerTest {
         });
 
         System.out.println("Testing if User IS Updated");
-        request.getSession().setAttribute("user", userManager.getUser(0));
-        request.setParameter("actionupdate", "2");
+        request.setParameter("action", "actionUpdate");
+        request.setParameter("id", "2");
         request.setParameter("email", "NewEmail@mail.com");
         request.setParameter("userFName", "New First Name");
         request.setParameter("userLName", "New Last Name");
@@ -301,6 +327,7 @@ public class UserManagementControllerTest {
         Assert.assertNull(user);
         user = (User) model.get("userToCreate");
         Assert.assertNull(user);
+        userManagerMock.assertIsSatisfied();
     }
 
     @Test
@@ -309,15 +336,15 @@ public class UserManagementControllerTest {
         userManagerMock.checking(new Expectations() {
 
             {
-                //checking if Create Method was called
+                //checking if Delete Method was called
                 oneOf(userManager).deleteUserWithId(with(equal(3)));
 
             }
         });
 
         System.out.println("Testing if User IS Deleted");
-        request.getSession().setAttribute("user", userManager.getUser(0));
-        request.setParameter("actiondelete", "3");
+        request.setParameter("action", "actiondelete");
+        request.setParameter("id", "3");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageUsers", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
@@ -336,6 +363,6 @@ public class UserManagementControllerTest {
         Assert.assertNull(user);
         user = (User) model.get("userToCreate");
         Assert.assertNull(user);
+        userManagerMock.assertIsSatisfied();
     }
-
 }

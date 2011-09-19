@@ -12,7 +12,6 @@ import com.greenland.memorycards.model.User;
 
 import com.greenland.memorycards.service.UserManager;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +26,6 @@ import org.springframework.web.servlet.mvc.Controller;
 
 public class UserManagementController implements Controller {
 
-    private User user;
     private UserManager userManager;
 
     public void setUserManager(UserManager userManager) {
@@ -40,58 +38,53 @@ public class UserManagementController implements Controller {
             throws ServletException, IOException {
 
         // The below code smells. TODO: Refactor
-        
+
         logger.info("User Management Controller");
         Map<String, Object> model = new HashMap<String, Object>();
+        String actionName = "";
+        int userId = -1;
+        Enumeration e = request.getParameterNames();
+        while (e.hasMoreElements()) {
+            String parameterName = (String) e.nextElement();
+            if (parameterName.equalsIgnoreCase("action")) {
+                actionName = (String) request.getParameter("action");
+            }
+            if (parameterName.equalsIgnoreCase("id")) {
+                userId = Integer.valueOf((String) request.getParameter("id"));
+            }
+//            logger.info("Action name: " + actionName);
+        }
+        processAction(request, actionName, userId, model);
+        // Display all USERS
+        List<User> userList = userManager.getAllUsers();
+        model.put("userList", userList);
+        return new ModelAndView("manageUsers", "model", model);
+    }
+
+    private void processAction(HttpServletRequest request, String actionName, int userId, Map<String, Object> model) {
         boolean create = false;
         boolean delete = false;
         boolean update = false;
 
-        String actionName = "";
-        Enumeration e = request.getParameterNames();
-        while (e.hasMoreElements()) {
-            actionName = (String) e.nextElement();
-            if (actionName.equalsIgnoreCase("actioncreate")) {
-                create = true;
-            }
-            if (actionName.equalsIgnoreCase("actiondelete")) {
-                delete = true;
-            }
-            if (actionName.equalsIgnoreCase("actionupdate")) {
-                update = true;
-            }
-//            logger.info("Action name: " + actionName);
+        if (actionName.equalsIgnoreCase("actioncreate")) {
+            create = true;
         }
-
-        // Displaying forms
-
-        if (actionName.equalsIgnoreCase("edit")) {
-            logger.info("Editing user (id=" + request.getParameter(actionName) + ")");
-            int userId = Integer.valueOf(request.getParameter(actionName));
-            User userToEdit = new User();
-            userToEdit = userManager.getUser(userId);
-            model.put("userToEdit", (User) userToEdit);
+        if (actionName.equalsIgnoreCase("actiondelete")) {
+            delete = true;
         }
-
-        if (actionName.equalsIgnoreCase("delete")) {
-            logger.info("Deleting user (id=" + request.getParameter(actionName) + ")");
-            int userId = Integer.valueOf(request.getParameter(actionName));
-            User userToDelete = new User();
-            userToDelete = userManager.getUser(userId);
-            model.put("userToDelete", (User) userToDelete);
+        if (actionName.equalsIgnoreCase("actionupdate")) {
+            update = true;
         }
+        displayForms(actionName, userId, request, model);
+        performActions(update, request, delete, create, userId);
+    }
 
-        if (actionName.equalsIgnoreCase("create")) {
-            logger.info("Creating New user");
-            model.put("userToCreate", new User());
-        }
-
+    private void performActions(boolean update, HttpServletRequest request, boolean delete, boolean create, int userId) throws NumberFormatException {
         // Form actions
 
         if (update) {
             logger.info("Updating ... ");
-            User userToBeUpdated = new User();
-            userToBeUpdated = userManager.getUser(Integer.valueOf(request.getParameter("actionupdate")));
+            User userToBeUpdated = userManager.getUser(userId);
 
             // Could use formBacking Object instead. TODO: Refactor
             User formUser = new User();
@@ -99,14 +92,13 @@ public class UserManagementController implements Controller {
             formUser.setPassword((String) request.getParameter("password"));
             formUser.setfName((String) request.getParameter("userFName"));
             formUser.setlName((String) request.getParameter("userLName"));
-            User updatedUser = new User();
-            updatedUser = userManager.combineUsers(userToBeUpdated, formUser);
+            User updatedUser = userManager.combineUsers(userToBeUpdated, formUser);
             userManager.updateUser(updatedUser);
         }
 
         if (delete) {
             logger.info("Deleting ...");
-            userManager.deleteUserWithId(Integer.valueOf(request.getParameter("actiondelete")));
+            userManager.deleteUserWithId(userId);
         }
 
         if (create) {
@@ -118,13 +110,23 @@ public class UserManagementController implements Controller {
             formUser.setlName((String) request.getParameter("userLName"));
             userManager.createNewUser(formUser);
         }
+    }
 
-        // Display all USERS
-        user = (User) request.getSession().getAttribute("user");
-        
-        List<User> userList = new ArrayList<User>();
-        userList = userManager.getAllUsers();
-        model.put("userList", userList);
-        return new ModelAndView("manageUsers", "model", model);
+    private void displayForms(String actionName, int userId, HttpServletRequest request, Map<String, Object> model) throws NumberFormatException {
+        logger.info("Displaying form for action "+actionName);
+        if (actionName.equalsIgnoreCase("edit")) {
+            logger.info("Show user to Edit (id=" + userId + ")");
+            User userToEdit = userManager.getUser(userId);
+            model.put("userToEdit", (User) userToEdit);
+        }
+        if (actionName.equalsIgnoreCase("delete")) {
+            logger.info("Show user to delete (id=" + userId + ")");
+            User userToDelete = userManager.getUser(userId);
+            model.put("userToDelete", (User) userToDelete);
+        }
+        if (actionName.equalsIgnoreCase("create")) {
+            logger.info("Show Create New User Form");
+            model.put("userToCreate", new User());
+        }
     }
 }

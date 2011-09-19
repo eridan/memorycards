@@ -1,0 +1,72 @@
+/* 
+    Document   : login
+    Created on : 02-Sep-2011, 12:02:24
+    Author     : jurijspe
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+/* Makeshift CSS Reset */
+{
+    margin: 0;
+    padding: 0;
+}
+
+#Extras, #Logout {
+    display: none;
+}
+
+#table {
+    display: table;
+}
+
+#mainContent {
+    display: table-cell;
+    width: 640px;
+}
+
+#msg {
+    display: inline-block;
+    font: 17px/22px Helvetica,Arial,sans-serif;
+}
+
+aside {
+    display: table-cell;
+    padding: 10px;
+    width: 300px;
+    border:1px solid #93CE37;
+    border-bottom:3px solid #9ED929;
+    background-color:#9DD929;
+    background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, rgb(123,192,67)),
+        color-stop(0.51, rgb(139,198,66)),
+        color-stop(0.87, rgb(158,217,41))
+        );
+    background: -moz-linear-gradient(
+        center bottom,
+        rgb(123,192,67) 2%,
+        rgb(139,198,66) 51%,
+        rgb(158,217,41) 87%
+        );
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    border-radius:15px 15px 40px 15px;
+    height: 120px;
+}
+
+.button {
+    float: right;
+    color: green;
+}
+
+#content {
+    background: none;
+}
