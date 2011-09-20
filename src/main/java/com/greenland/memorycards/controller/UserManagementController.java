@@ -37,84 +37,110 @@ public class UserManagementController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // The below code smells. TODO: Refactor
-
         logger.info("User Management Controller");
         Map<String, Object> model = new HashMap<String, Object>();
-        String actionName = "";
-        String formName = "";
-        int userId = -1;
         Enumeration e = request.getParameterNames();
         while (e.hasMoreElements()) {
             String parameterName = (String) e.nextElement();
             if (parameterName.equalsIgnoreCase("action")) {
-                actionName = (String) request.getParameter("action");
+                executeAction(request, getActionName(request));
             }
             if (parameterName.equalsIgnoreCase("form")) {
-                formName = (String) request.getParameter("form");
-            }
-            if (parameterName.equalsIgnoreCase("id")) {
-                userId = Integer.valueOf((String) request.getParameter("id"));
+                displayForm(getFormName(request), getUserId(request), model);
             }
         }
 
-        if (!actionName.equals("")) {
-            executeAction(request, actionName, userId, model);
-        }
-        if (!formName.equals("")) {
-            displayForm(formName, userId, model);
-        }
         // Display all USERS
         List<User> userList = userManager.getAllUsers();
         model.put("userList", userList);
         return new ModelAndView("manageUsers", "model", model);
     }
 
-    private void executeAction(HttpServletRequest request, String actionName, int userId, Map<String, Object> model) {
+    private String getFormName(HttpServletRequest request) {
+        return (String) request.getParameter("form");
+    }
 
+    private String getActionName(HttpServletRequest request) {
+        return (String) request.getParameter("action");
+    }
+
+    private void executeAction(HttpServletRequest request, String actionName) {
         if (actionName.equalsIgnoreCase("create")) {
-            logger.info("Creating ...");
-            User formUser = new User();
-            formUser.setEmail((String) request.getParameter("email"));
-            formUser.setPassword((String) request.getParameter("password"));
-            formUser.setfName((String) request.getParameter("userFName"));
-            formUser.setlName((String) request.getParameter("userLName"));
-            userManager.createNewUser(formUser);
+            createNewUser(request);
         }
         if (actionName.equalsIgnoreCase("delete")) {
-            logger.info("Deleting ...");
-            userManager.deleteUserWithId(userId);
+            deleteUserWithId(getUserId(request));
         }
         if (actionName.equalsIgnoreCase("update")) {
-            logger.info("Updating ... ");
-            User userToBeUpdated = userManager.getUser(userId);
-
-            // Could use formBacking Object instead. TODO: Refactor
-            User formUser = new User();
-            formUser.setEmail((String) request.getParameter("email"));
-            formUser.setPassword((String) request.getParameter("password"));
-            formUser.setfName((String) request.getParameter("userFName"));
-            formUser.setlName((String) request.getParameter("userLName"));
-            User updatedUser = userManager.combineUsers(userToBeUpdated, formUser);
-            userManager.updateUser(updatedUser);
+            updateUserWithId(getUserId(request), request);
         }
+    }
+
+    private void createNewUser(HttpServletRequest request) {
+        logger.info("Creating ...");
+        // Could use formBacking Object instead. TODO: Refactor
+        User formUser = new User();
+        formUser.setEmail((String) request.getParameter("email"));
+        formUser.setPassword((String) request.getParameter("password"));
+        formUser.setfName((String) request.getParameter("userFName"));
+        formUser.setlName((String) request.getParameter("userLName"));
+        userManager.createNewUser(formUser);
+    }
+
+    private void deleteUserWithId(int userId) {
+        logger.info("Deleting ...");
+        userManager.deleteUserWithId(userId);
+    }
+
+    private void updateUserWithId(int userId, HttpServletRequest request) {
+        logger.info("Updating ... ");
+        User userToBeUpdated = userManager.getUser(userId);
+
+        // Could use formBacking Object instead. TODO: Refactor
+        User formUser = new User();
+        formUser.setEmail((String) request.getParameter("email"));
+        formUser.setPassword((String) request.getParameter("password"));
+        formUser.setfName((String) request.getParameter("userFName"));
+        formUser.setlName((String) request.getParameter("userLName"));
+        User updatedUser = userManager.combineUsers(userToBeUpdated, formUser);
+        userManager.updateUser(updatedUser);
     }
 
     private void displayForm(String formName, int userId, Map<String, Object> model) {
         logger.info("Displaying form " + formName);
         if (formName.equalsIgnoreCase("edit")) {
-            logger.info("Show user to Edit (id=" + userId + ")");
-            User userToEdit = userManager.getUser(userId);
-            model.put("userToEdit", (User) userToEdit);
+            getUserToEdit(userId, model);
         }
         if (formName.equalsIgnoreCase("delete")) {
-            logger.info("Show user to delete (id=" + userId + ")");
-            User userToDelete = userManager.getUser(userId);
-            model.put("userToDelete", (User) userToDelete);
+            getUserToDelete(userId, model);
         }
         if (formName.equalsIgnoreCase("create")) {
             logger.info("Show Create New User Form");
             model.put("userToCreate", new User());
         }
+    }
+
+    private void getUserToEdit(int userId, Map<String, Object> model) {
+        logger.info("Show user to Edit (id=" + userId + ")");
+        User userToEdit = userManager.getUser(userId);
+        model.put("userToEdit", (User) userToEdit);
+    }
+
+    private void getUserToDelete(int userId, Map<String, Object> model) {
+        logger.info("Show user to delete (id=" + userId + ")");
+        User userToDelete = userManager.getUser(userId);
+        model.put("userToDelete", (User) userToDelete);
+    }
+
+    private int getUserId(HttpServletRequest request) {
+        int userId = -1;
+        Enumeration e = request.getParameterNames();
+        while (e.hasMoreElements()) {
+            String parameterName = (String) e.nextElement();
+            if (parameterName.equalsIgnoreCase("id")) {
+                userId = Integer.valueOf((String) request.getParameter("id"));
+            }
+        }
+        return userId;
     }
 }

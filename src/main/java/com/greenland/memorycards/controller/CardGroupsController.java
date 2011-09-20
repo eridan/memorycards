@@ -47,7 +47,6 @@ public class CardGroupsController implements Controller {
         boolean create = false;
         boolean delete = false;
         boolean update = false;
-        boolean addNewGroup = false;
 
         String actionName = "";
         Enumeration e = request.getParameterNames();
@@ -61,9 +60,6 @@ public class CardGroupsController implements Controller {
             }
             if (actionName.equalsIgnoreCase("actionupdate")) {
                 update = true;
-            }
-            if (actionName.equalsIgnoreCase("addGroup")) {
-                addNewGroup = true;
             }
 //            logger.info("Action name: " + actionName);
         }
@@ -119,10 +115,6 @@ public class CardGroupsController implements Controller {
             formCardGroup.setGroupName((String) request.getParameter("groupName"));
             formCardGroup.setDescription((String) request.getParameter("description"));
             cardGroupManager.createNewCardGroupForUserId(appUser.getId(), formCardGroup);
-        }
-
-        if (addNewGroup) {
-            logger.info("Redirecting to Manage CardGroups ...");
         }
 
         List<CardGroup> cardGroups = new ArrayList<CardGroup>();
