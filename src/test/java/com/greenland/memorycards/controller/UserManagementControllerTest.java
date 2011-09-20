@@ -142,7 +142,7 @@ public class UserManagementControllerTest {
 
         System.out.println("Testing Edit user displayed");
         request.setMethod("POST");
-        request.setParameter("action", "edit");
+        request.setParameter("form", "edit");
         request.setParameter("id", "0");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageUsers", mav.getViewName());
@@ -186,7 +186,7 @@ public class UserManagementControllerTest {
 
         System.out.println("Testing Delete user displayed");
         request.setMethod("POST");
-        request.setParameter("action", "delete");
+        request.setParameter("form", "delete");
         request.setParameter("id", "2");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageUsers", mav.getViewName());
@@ -216,7 +216,7 @@ public class UserManagementControllerTest {
 
         System.out.println("Testing Create user form displayed");
         request.setMethod("POST");
-        request.setParameter("action", "create");
+        request.setParameter("form", "create");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageUsers", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
@@ -251,7 +251,7 @@ public class UserManagementControllerTest {
         });
 
         System.out.println("Testing if User IS Created");
-        request.setParameter("action", "actioncreate");
+        request.setParameter("action", "create");
         request.setParameter("email", "NewEmail@mail.com");
         request.setParameter("password", "newpassw0rd");
         request.setParameter("userFName", "New First Name");
@@ -304,7 +304,7 @@ public class UserManagementControllerTest {
         });
 
         System.out.println("Testing if User IS Updated");
-        request.setParameter("action", "actionUpdate");
+        request.setParameter("action", "update");
         request.setParameter("id", "2");
         request.setParameter("email", "NewEmail@mail.com");
         request.setParameter("userFName", "New First Name");
@@ -343,7 +343,7 @@ public class UserManagementControllerTest {
         });
 
         System.out.println("Testing if User IS Deleted");
-        request.setParameter("action", "actiondelete");
+        request.setParameter("action", "delete");
         request.setParameter("id", "3");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageUsers", mav.getViewName());

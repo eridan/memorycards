@@ -367,5 +367,6 @@ public class CardGroupsControllerTest {
         Assert.assertNull(group);
         group = (CardGroup) model.get("cardGroupToCreate");
         Assert.assertNull(group);
+//        cardGroupManagerMock.assertIsSatisfied();
     }
 }

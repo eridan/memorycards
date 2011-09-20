@@ -21,6 +21,7 @@
                 <prop key="index.do">indexController</prop>
                 <prop key="login.do">loginController</prop>
                 <prop key="manageGroups.do">cardGroupsController</prop>
+                <prop key="manageCards.do">cardManagementController</prop>
                 <prop key="manageUsers.do">userManagementController</prop>
             </props>
         </property>
@@ -36,6 +37,10 @@
     
     <bean id="cardGroupsController" class="com.greenland.memorycards.controller.CardGroupsController">
         <property name="cardGroupManager" ref="cardGroupManager" />
+    </bean>
+    
+    <bean id="cardManagementController" class="com.greenland.memorycards.controller.CardManagementController">
+        <property name="cardManager" ref="cardManager" />
     </bean>
     
     <bean id="userManager" class="com.greenland.memorycards.service.UserManagerImpl">

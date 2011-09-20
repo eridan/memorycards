@@ -53,7 +53,7 @@
                             <a href="manageGroups.do?edit=${group.id}">Edit</a>&nbsp;
                             <a href="manageGroups.do?delete=${group.id}">Delete</a>&nbsp;
                             <a href="manageGroups.do?create=true">Create</a>&nbsp;
-                            <a href="manageCards.do?managerCards=${group.id}">Manage Cards</a></td>
+                            <a href="manageCards.do?manageCards=${group.id}">Manage Cards</a></td>
                         </td>
                     </tr>
                 </c:forEach>

@@ -42,6 +42,7 @@ public class UserManagementController implements Controller {
         logger.info("User Management Controller");
         Map<String, Object> model = new HashMap<String, Object>();
         String actionName = "";
+        String formName = "";
         int userId = -1;
         Enumeration e = request.getParameterNames();
         while (e.hasMoreElements()) {
@@ -49,42 +50,42 @@ public class UserManagementController implements Controller {
             if (parameterName.equalsIgnoreCase("action")) {
                 actionName = (String) request.getParameter("action");
             }
+            if (parameterName.equalsIgnoreCase("form")) {
+                formName = (String) request.getParameter("form");
+            }
             if (parameterName.equalsIgnoreCase("id")) {
                 userId = Integer.valueOf((String) request.getParameter("id"));
             }
-//            logger.info("Action name: " + actionName);
         }
-        processAction(request, actionName, userId, model);
+
+        if (!actionName.equals("")) {
+            executeAction(request, actionName, userId, model);
+        }
+        if (!formName.equals("")) {
+            displayForm(formName, userId, model);
+        }
         // Display all USERS
         List<User> userList = userManager.getAllUsers();
         model.put("userList", userList);
         return new ModelAndView("manageUsers", "model", model);
     }
 
-    private void processAction(HttpServletRequest request, String actionName, int userId, Map<String, Object> model) {
-        boolean create = false;
-        boolean delete = false;
-        boolean update = false;
+    private void executeAction(HttpServletRequest request, String actionName, int userId, Map<String, Object> model) {
 
-        create=actionName.equalsIgnoreCase("actioncreate")?true:false;
-        
-        if (actionName.equalsIgnoreCase("actioncreate")) {
-            create = true;
+        if (actionName.equalsIgnoreCase("create")) {
+            logger.info("Creating ...");
+            User formUser = new User();
+            formUser.setEmail((String) request.getParameter("email"));
+            formUser.setPassword((String) request.getParameter("password"));
+            formUser.setfName((String) request.getParameter("userFName"));
+            formUser.setlName((String) request.getParameter("userLName"));
+            userManager.createNewUser(formUser);
         }
-        if (actionName.equalsIgnoreCase("actiondelete")) {
-            delete = true;
+        if (actionName.equalsIgnoreCase("delete")) {
+            logger.info("Deleting ...");
+            userManager.deleteUserWithId(userId);
         }
-        if (actionName.equalsIgnoreCase("actionupdate")) {
-            update = true;
-        }
-        displayForms(actionName, userId, request, model);
-        performActions(update, request, delete, create, userId);
-    }
-
-    private void performActions(boolean update, HttpServletRequest request, boolean delete, boolean create, int userId) throws NumberFormatException {
-        // Form actions
-
-        if (update) {
+        if (actionName.equalsIgnoreCase("update")) {
             logger.info("Updating ... ");
             User userToBeUpdated = userManager.getUser(userId);
 
@@ -97,36 +98,21 @@ public class UserManagementController implements Controller {
             User updatedUser = userManager.combineUsers(userToBeUpdated, formUser);
             userManager.updateUser(updatedUser);
         }
-
-        if (delete) {
-            logger.info("Deleting ...");
-            userManager.deleteUserWithId(userId);
-        }
-
-        if (create) {
-            logger.info("Creating ...");
-            User formUser = new User();
-            formUser.setEmail((String) request.getParameter("email"));
-            formUser.setPassword((String) request.getParameter("password"));
-            formUser.setfName((String) request.getParameter("userFName"));
-            formUser.setlName((String) request.getParameter("userLName"));
-            userManager.createNewUser(formUser);
-        }
     }
 
-    private void displayForms(String actionName, int userId, HttpServletRequest request, Map<String, Object> model) throws NumberFormatException {
-        logger.info("Displaying form for action "+actionName);
-        if (actionName.equalsIgnoreCase("edit")) {
+    private void displayForm(String formName, int userId, Map<String, Object> model) {
+        logger.info("Displaying form " + formName);
+        if (formName.equalsIgnoreCase("edit")) {
             logger.info("Show user to Edit (id=" + userId + ")");
             User userToEdit = userManager.getUser(userId);
             model.put("userToEdit", (User) userToEdit);
         }
-        if (actionName.equalsIgnoreCase("delete")) {
+        if (formName.equalsIgnoreCase("delete")) {
             logger.info("Show user to delete (id=" + userId + ")");
             User userToDelete = userManager.getUser(userId);
             model.put("userToDelete", (User) userToDelete);
         }
-        if (actionName.equalsIgnoreCase("create")) {
+        if (formName.equalsIgnoreCase("create")) {
             logger.info("Show Create New User Form");
             model.put("userToCreate", new User());
         }

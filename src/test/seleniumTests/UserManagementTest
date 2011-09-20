@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8084/" />
+<title>New Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">New Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Manage Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/MemoryCards-2.0/index.do</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Email</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Password</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>email</td>
+	<td>test@mail.ru</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=password</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Manage Users</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=email</td>
+	<td>seleniumTest@mail.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=password</td>
+	<td>selenium</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=userFName</td>
+	<td>Selenium</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=userLName</td>
+	<td>Selenium</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='aTable']/tbody/tr[7]/td</td>
+	<td>seleniumTest@mail.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='aTable']/tbody/tr[7]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=userFName</td>
+	<td>Michael</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>name=userLName</td>
+	<td>Bradberry</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//table[@id='aTable']/tbody/tr[7]/td[2]</td>
+	<td>Michael Bradberry</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='aTable']/tbody/tr[7]/td[3]/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>id=warning</td>
+	<td>Please manage Users with extreme care, your changes can not be undone ...</td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='content']/form/table.0.1</td>
+	<td>seleniumTest@mail.com</td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='content']/form/table.1.1</td>
+	<td>Michael</td>
+</tr>
+<tr>
+	<td>assertTable</td>
+	<td>//div[@id='content']/form/table.2.1</td>
+	<td>Bradberry</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Logout</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
