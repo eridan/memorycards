@@ -50,10 +50,10 @@
                         <td class="date">${group.creationDate}</td>
                         <td class="date">${group.updateDate}</td>
                         <td>
-                            <a href="manageGroups.do?edit=${group.id}">Edit</a>&nbsp;
-                            <a href="manageGroups.do?delete=${group.id}">Delete</a>&nbsp;
-                            <a href="manageGroups.do?create=true">Create</a>&nbsp;
-                            <a href="manageCards.do?manageCards=${group.id}">Manage Cards</a></td>
+                            <a href="manageGroups.do?form=edit&id=${group.id}">Edit</a>&nbsp;
+                            <a href="manageGroups.do?form=delete&id=${group.id}">Delete</a>&nbsp;
+                            <a href="manageGroups.do?form=create">Create</a>&nbsp;
+                            <a href="manageCards.do?form=manageCards&id=${group.id}">Manage Cards</a></td>
                         </td>
                     </tr>
                 </c:forEach>
@@ -61,13 +61,13 @@
         </c:when>
         <c:otherwise>
             <section id="warning">No Card Groups? You can create them here ...</section>
-            <a id="pageButton" href="manageGroups.do?create=true">Create</a></td>
+            <a id="pageButton" href="manageGroups.do?action=create">Create</a></td>
         </c:otherwise>
     </c:choose>
 
 <c:if test="${model.cardGroupToEdit != null}">
     <br />
-    <form action="manageGroups.do?actionupdate=${model.cardGroupToEdit.id}" method="POST">
+    <form action="manageGroups.do?action=update&id=${model.cardGroupToEdit.id}" method="POST">
         <section id="warning">Please manage groups with extreme care, your changes can not be undone ...</section>
         <br />
         <table id="aTable">
@@ -109,7 +109,7 @@
 <c:if test="${model.cardGroupToDelete != null}">
     <br />
     <section id="warning">Please manage groups with extreme care, your changes can not be undone ...</section>
-    <form action="manageGroups.do?actiondelete=${model.cardGroupToDelete.id}" method="POST">
+    <form action="manageGroups.do?action=delete&id=${model.cardGroupToDelete.id}" method="POST">
         <table id="aTable">
             <tr>
                 <td><fmt:message key="groupName"/></td>
@@ -155,7 +155,7 @@
 
 <c:if test="${model.cardGroupToCreate != null}">
     <br />
-    <form action="manageGroups.do?actioncreate" method="POST">
+    <form action="manageGroups.do?action=create" method="POST">
         <table id="aTable">
             <tr>
                 <td><fmt:message key="groupName"/></td>

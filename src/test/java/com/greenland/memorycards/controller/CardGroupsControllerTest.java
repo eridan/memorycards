@@ -124,10 +124,10 @@ public class CardGroupsControllerTest {
                 cardGroups.add(cardGroup1);
                 oneOf(cardGroupManager).getCardGroupsForUser("test@mail.ru");
                 will(returnValue(cardGroups));
-                oneOf(cardGroupManager).getCardGroupWithId(1);
-                will(returnValue(cardGroup));
-                oneOf(cardGroupManager).getCardGroupWithId(2);
-                will(returnValue(cardGroup1));
+//                oneOf(cardGroupManager).getCardGroupWithId(1);
+//                will(returnValue(cardGroup));
+//                never(cardGroupManager).getCardGroupWithId(2);
+//                will(returnValue(cardGroup1));
             }
         });
 
@@ -164,9 +164,38 @@ public class CardGroupsControllerTest {
     @Test
     public void testShowCardGroupToEdit() throws Exception {
 
+        cardGroupManagerMock.checking(new Expectations() {
+
+            {
+                Card card = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card1 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card2 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card3 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card4 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                List<Card> cardList = new ArrayList<Card>();
+                cardList.add(card);
+                cardList.add(card1);
+                cardList.add(card2);
+                cardList.add(card3);
+                cardList.add(card4);
+                List<Card> cardList1 = new ArrayList<Card>();
+                cardList1.add(card);
+                cardList1.add(card1);
+                cardList1.add(card2);
+                CardGroup cardGroup = new CardGroup();
+                cardGroup.setId(1);
+                cardGroup.setGroupName("name1");
+                cardGroup.setDescription("Description");
+                cardGroup.setCardList(cardList);
+                oneOf(cardGroupManager).getCardGroupWithId(1);
+                will(returnValue(cardGroup));
+            }
+        });
+
         System.out.println("Testing if Card Group To Edit is shown");
         request.getSession().setAttribute("user", userManager.getUser(0));
-        request.setParameter("edit", "1");
+        request.setParameter("form", "edit");
+        request.setParameter("id", "1");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageCardGroups", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
@@ -187,14 +216,45 @@ public class CardGroupsControllerTest {
         Assert.assertEquals("name1", group.getGroupName());
         Assert.assertEquals("Description", group.getDescription());
         Assert.assertEquals(5, group.getCardList().size());
+        userManagerMock.assertIsSatisfied();
+        cardGroupManagerMock.assertIsSatisfied();
     }
 
     @Test
     public void testShowCardGroupToDelete() throws Exception {
 
+        cardGroupManagerMock.checking(new Expectations() {
+
+            {
+                Card card = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card1 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card2 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card3 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card4 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                List<Card> cardList = new ArrayList<Card>();
+                cardList.add(card);
+                cardList.add(card1);
+                cardList.add(card2);
+                cardList.add(card3);
+                cardList.add(card4);
+                List<Card> cardList1 = new ArrayList<Card>();
+                cardList1.add(card);
+                cardList1.add(card1);
+                cardList1.add(card2);
+                CardGroup cardGroup = new CardGroup();
+                cardGroup.setId(1);
+                cardGroup.setGroupName("name1");
+                cardGroup.setDescription("Description");
+                cardGroup.setCardList(cardList);
+                oneOf(cardGroupManager).getCardGroupWithId(1);
+                will(returnValue(cardGroup));
+            }
+        });
+
         System.out.println("Testing if Card Group To Delete is shown");
         request.getSession().setAttribute("user", userManager.getUser(0));
-        request.setParameter("delete", "1");
+        request.setParameter("form", "delete");
+        request.setParameter("id", "1");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageCardGroups", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
@@ -217,6 +277,8 @@ public class CardGroupsControllerTest {
         Assert.assertEquals("name1", group.getGroupName());
         Assert.assertEquals("Description", group.getDescription());
         Assert.assertEquals(5, group.getCardList().size());
+        userManagerMock.assertIsSatisfied();
+        cardGroupManagerMock.assertIsSatisfied();
     }
 
     @Test
@@ -224,7 +286,7 @@ public class CardGroupsControllerTest {
 
         System.out.println("Testing if Card Group To Create is shown");
         request.getSession().setAttribute("user", userManager.getUser(0));
-        request.setParameter("create", "1");
+        request.setParameter("form", "create");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageCardGroups", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
@@ -245,6 +307,8 @@ public class CardGroupsControllerTest {
         Assert.assertNull(group);
         group = (CardGroup) model.get("cardGroupToCreate");
         Assert.assertNotNull(group);
+        userManagerMock.assertIsSatisfied();
+        cardGroupManagerMock.assertIsSatisfied();
     }
 
     @Test
@@ -264,7 +328,7 @@ public class CardGroupsControllerTest {
 
         System.out.println("Testing if Card Group IS Created");
         request.getSession().setAttribute("user", userManager.getUser(0));
-        request.setParameter("actioncreate", "true");
+        request.setParameter("action", "create");
         request.setParameter("groupName", "New Group Name");
         request.setParameter("description", "New Group Description");
         ModelAndView mav = controller.handleRequest(request, response);
@@ -287,6 +351,8 @@ public class CardGroupsControllerTest {
         Assert.assertNull(group);
         group = (CardGroup) model.get("cardGroupToCreate");
         Assert.assertNull(group);
+        userManagerMock.assertIsSatisfied();
+        cardGroupManagerMock.assertIsSatisfied();
     }
 
     @Test
@@ -295,6 +361,28 @@ public class CardGroupsControllerTest {
         cardGroupManagerMock.checking(new Expectations() {
 
             {
+                Card card = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card1 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card2 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card3 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                Card card4 = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                List<Card> cardList = new ArrayList<Card>();
+                cardList.add(card);
+                cardList.add(card1);
+                cardList.add(card2);
+                cardList.add(card3);
+                cardList.add(card4);
+                List<Card> cardList1 = new ArrayList<Card>();
+                cardList1.add(card);
+                cardList1.add(card1);
+                cardList1.add(card2);
+                CardGroup cardGroup2 = new CardGroup();
+                cardGroup2.setId(1);
+                cardGroup2.setGroupName("name1");
+                cardGroup2.setDescription("Description");
+                cardGroup2.setCardList(cardList);
+                oneOf(cardGroupManager).getCardGroupWithId(2);
+                will(returnValue(cardGroup2));
                 CardGroup newCardGroup = new CardGroup();
                 newCardGroup.setId(2);
                 newCardGroup.setGroupName("New Group Name");
@@ -307,7 +395,8 @@ public class CardGroupsControllerTest {
 
         System.out.println("Testing if Card Group IS Updated");
         request.getSession().setAttribute("user", userManager.getUser(0));
-        request.setParameter("actionupdate", "2");
+        request.setParameter("action", "update");
+        request.setParameter("id", "2");
         request.setParameter("groupName", "New Group Name");
         request.setParameter("description", "New Group Description");
         ModelAndView mav = controller.handleRequest(request, response);
@@ -330,6 +419,8 @@ public class CardGroupsControllerTest {
         Assert.assertNull(group);
         group = (CardGroup) model.get("cardGroupToCreate");
         Assert.assertNull(group);
+        userManagerMock.assertIsSatisfied();
+        cardGroupManagerMock.assertIsSatisfied();
     }
 
     @Test
@@ -346,7 +437,8 @@ public class CardGroupsControllerTest {
 
         System.out.println("Testing if Card Group IS Deleted");
         request.getSession().setAttribute("user", userManager.getUser(0));
-        request.setParameter("actiondelete", "2");
+        request.setParameter("action", "delete");
+        request.setParameter("id", "2");
         ModelAndView mav = controller.handleRequest(request, response);
         Assert.assertEquals("manageCardGroups", mav.getViewName());
         Assert.assertNotNull(mav.getModel());
@@ -367,6 +459,7 @@ public class CardGroupsControllerTest {
         Assert.assertNull(group);
         group = (CardGroup) model.get("cardGroupToCreate");
         Assert.assertNull(group);
-//        cardGroupManagerMock.assertIsSatisfied();
+        userManagerMock.assertIsSatisfied();
+        cardGroupManagerMock.assertIsSatisfied();
     }
 }

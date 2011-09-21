@@ -44,82 +44,155 @@ public class CardGroupsController implements Controller {
         User appUser = (User) request.getSession().getAttribute("user");
 
         Map<String, Object> model = new HashMap<String, Object>();
-        boolean create = false;
-        boolean delete = false;
-        boolean update = false;
-
-        String actionName = "";
         Enumeration e = request.getParameterNames();
         while (e.hasMoreElements()) {
-            actionName = (String) e.nextElement();
-            if (actionName.equalsIgnoreCase("actioncreate")) {
-                create = true;
+            String parameterName = (String) e.nextElement();
+            if (parameterName.equalsIgnoreCase("action")) {
+                executeAction(request, getActionName(request), appUser.getId());
             }
-            if (actionName.equalsIgnoreCase("actiondelete")) {
-                delete = true;
+            if (parameterName.equalsIgnoreCase("form")) {
+                displayForm(getFormName(request), getCardGroupId(request), model);
             }
-            if (actionName.equalsIgnoreCase("actionupdate")) {
-                update = true;
-            }
-//            logger.info("Action name: " + actionName);
         }
 
         // Displaying forms
 
-        if (actionName.equalsIgnoreCase("edit")) {
-            logger.info("Editing cardGroup (id=" + request.getParameter(actionName) + ")");
-            int cardGroupId = Integer.valueOf(request.getParameter(actionName));
-            CardGroup cardGroupToEdit = new CardGroup();
-            cardGroupToEdit = cardGroupManager.getCardGroupWithId(cardGroupId);
-            model.put("cardGroupToEdit", (CardGroup) cardGroupToEdit);
-        }
+//        if (actionName.equalsIgnoreCase("edit")) {
+//            logger.info("Editing cardGroup (id=" + request.getParameter(actionName) + ")");
+//            int cardGroupId = Integer.valueOf(request.getParameter(actionName));
+//            CardGroup cardGroupToEdit = new CardGroup();
+//            cardGroupToEdit = cardGroupManager.getCardGroupWithId(cardGroupId);
+//            model.put("cardGroupToEdit", (CardGroup) cardGroupToEdit);
+//        }
 
-        if (actionName.equalsIgnoreCase("delete")) {
-            logger.info("Deleting cardGroup (id=" + request.getParameter(actionName) + ")");
-            int cardGroupId = Integer.valueOf(request.getParameter(actionName));
-            CardGroup cardGroupToDelete = new CardGroup();
-            cardGroupToDelete = cardGroupManager.getCardGroupWithId(cardGroupId);
-            model.put("cardGroupToDelete", (CardGroup) cardGroupToDelete);
-        }
-
-        if (actionName.equalsIgnoreCase("create")) {
-            logger.info("Creating New cardGroup");
-            model.put("cardGroupToCreate", new CardGroup());
-        }
-
-        // Form actions
-
-        if (update) {
-            logger.info("Updating ... ");
-            CardGroup cardGroupToBeUpdated = new CardGroup();
-            cardGroupToBeUpdated = cardGroupManager.getCardGroupWithId(Integer.valueOf(request.getParameter("actionupdate")));
-
-            // Could use formBacking Object instead. TODO: Refactor
-            CardGroup formCardGroup = new CardGroup();
-            formCardGroup.setId(cardGroupToBeUpdated.getId());
-            formCardGroup.setGroupName((String) request.getParameter("groupName"));
-            formCardGroup.setDescription((String) request.getParameter("description"));
-            cardGroupManager.updateCardGroup(formCardGroup);
-        }
-
-        if (delete) {
-            logger.warn("Deleting ...");
-            logger.warn("CardGroup to delete: " + model.get("cardGroupToDelete"));
-            logger.warn("ID = " + Integer.valueOf(request.getParameter("actiondelete")));
-            cardGroupManager.deleteCardGroupWithId(Integer.valueOf(request.getParameter("actiondelete")));
-        }
-
-        if (create) {
-            logger.info("Creating ...");
-            CardGroup formCardGroup = new CardGroup();
-            formCardGroup.setGroupName((String) request.getParameter("groupName"));
-            formCardGroup.setDescription((String) request.getParameter("description"));
-            cardGroupManager.createNewCardGroupForUserId(appUser.getId(), formCardGroup);
-        }
+//        if (actionName.equalsIgnoreCase("delete")) {
+//            logger.info("Deleting cardGroup (id=" + request.getParameter(actionName) + ")");
+//            int cardGroupId = Integer.valueOf(request.getParameter(actionName));
+//            CardGroup cardGroupToDelete = new CardGroup();
+//            cardGroupToDelete = cardGroupManager.getCardGroupWithId(cardGroupId);
+//            model.put("cardGroupToDelete", (CardGroup) cardGroupToDelete);
+//        }
+//
+//        if (actionName.equalsIgnoreCase("create")) {
+//            logger.info("Creating New cardGroup");
+//            model.put("cardGroupToCreate", new CardGroup());
+//        }
+//
+//        // Form actions
+//
+//        if (update) {
+//            logger.info("Updating ... ");
+//            CardGroup cardGroupToBeUpdated = new CardGroup();
+//            cardGroupToBeUpdated = cardGroupManager.getCardGroupWithId(Integer.valueOf(request.getParameter("actionupdate")));
+//
+//            // Could use formBacking Object instead. TODO: Refactor
+//            CardGroup formCardGroup = new CardGroup();
+//            formCardGroup.setId(cardGroupToBeUpdated.getId());
+//            formCardGroup.setGroupName((String) request.getParameter("groupName"));
+//            formCardGroup.setDescription((String) request.getParameter("description"));
+//            cardGroupManager.updateCardGroup(formCardGroup);
+//        }
+//
+//        if (delete) {
+//            logger.warn("Deleting ...");
+//            cardGroupManager.deleteCardGroupWithId(Integer.valueOf(request.getParameter("actiondelete")));
+//        }
+//
+//        if (create) {
+//            logger.info("Creating ...");
+//            CardGroup formCardGroup = new CardGroup();
+//            formCardGroup.setGroupName((String) request.getParameter("groupName"));
+//            formCardGroup.setDescription((String) request.getParameter("description"));
+//            cardGroupManager.createNewCardGroupForUserId(appUser.getId(), formCardGroup);
+//        }
 
         List<CardGroup> cardGroups = new ArrayList<CardGroup>();
         cardGroups = cardGroupManager.getCardGroupsForUser(appUser.getEmail());
         model.put("cardGroups", cardGroups);
         return new ModelAndView("manageCardGroups", "model", model);
+    }
+
+    private String getFormName(HttpServletRequest request) {
+        return (String) request.getParameter("form");
+    }
+
+    private String getActionName(HttpServletRequest request) {
+        return (String) request.getParameter("action");
+    }
+
+    private void executeAction(HttpServletRequest request, String actionName, int cardGroupId) {
+        if (actionName.equalsIgnoreCase("create")) {
+            createNewCardGroup(request, cardGroupId);
+        }
+        if (actionName.equalsIgnoreCase("delete")) {
+            deleteCardGroupWithId(getCardGroupId(request));
+        }
+        if (actionName.equalsIgnoreCase("update")) {
+            updateCardGroupWithId(getCardGroupId(request), request);
+        }
+    }
+
+    private void createNewCardGroup(HttpServletRequest request, int userId) {
+        logger.info("Creating ...");
+        CardGroup formCardGroup = new CardGroup();
+        formCardGroup.setGroupName((String) request.getParameter("groupName"));
+        formCardGroup.setDescription((String) request.getParameter("description"));
+        cardGroupManager.createNewCardGroupForUserId(userId, formCardGroup);
+    }
+
+    private void deleteCardGroupWithId(int cardGroupId) {
+        logger.warn("Deleting ...");
+        cardGroupManager.deleteCardGroupWithId(cardGroupId);
+    }
+
+    private void updateCardGroupWithId(int cardGroupId, HttpServletRequest request) {
+        logger.info("Updating ... ");
+        CardGroup cardGroupToBeUpdated = new CardGroup();
+        cardGroupToBeUpdated = cardGroupManager.getCardGroupWithId(cardGroupId);
+
+        // Could use formBacking Object instead. TODO: Refactor
+        CardGroup formCardGroup = new CardGroup();
+        formCardGroup.setId(cardGroupToBeUpdated.getId());
+        formCardGroup.setGroupName((String) request.getParameter("groupName"));
+        formCardGroup.setDescription((String) request.getParameter("description"));
+        cardGroupManager.updateCardGroup(formCardGroup);
+    }
+
+    private void displayForm(String formName, int cardGroupId, Map<String, Object> model) {
+        logger.info("Displaying form " + formName);
+        if (formName.equalsIgnoreCase("edit")) {
+            getCardGroupToEdit(cardGroupId, model);
+        }
+        if (formName.equalsIgnoreCase("delete")) {
+            getCardGroupToDelete(cardGroupId, model);
+        }
+        if (formName.equalsIgnoreCase("create")) {
+            logger.info("Creating New cardGroup");
+            model.put("cardGroupToCreate", new CardGroup());
+        }
+    }
+
+    private void getCardGroupToEdit(int cardGroupId, Map<String, Object> model) {
+        logger.info("Show cardGroup to Edit (id=" + cardGroupId + ")");
+        CardGroup cardGroupToEdit = cardGroupManager.getCardGroupWithId(cardGroupId);
+        model.put("cardGroupToEdit", (CardGroup) cardGroupToEdit);
+    }
+
+    private void getCardGroupToDelete(int cardGroupId, Map<String, Object> model) {
+        logger.info("Deleting cardGroup (id=" + cardGroupId + ")");
+        CardGroup cardGroupToDelete = cardGroupManager.getCardGroupWithId(cardGroupId);
+        model.put("cardGroupToDelete", (CardGroup) cardGroupToDelete);
+    }
+
+    private int getCardGroupId(HttpServletRequest request) {
+        int cardGroupId = -1;
+        Enumeration e = request.getParameterNames();
+        while (e.hasMoreElements()) {
+            String parameterName = (String) e.nextElement();
+            if (parameterName.equalsIgnoreCase("id")) {
+                cardGroupId = Integer.valueOf((String) request.getParameter("id"));
+            }
+        }
+        return cardGroupId;
     }
 }
