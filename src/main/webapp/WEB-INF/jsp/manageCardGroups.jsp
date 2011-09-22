@@ -53,7 +53,7 @@
                             <a href="manageGroups.do?form=edit&id=${group.id}">Edit</a>&nbsp;
                             <a href="manageGroups.do?form=delete&id=${group.id}">Delete</a>&nbsp;
                             <a href="manageGroups.do?form=create">Create</a>&nbsp;
-                            <a href="manageCards.do?form=manageCards&id=${group.id}">Manage Cards</a></td>
+                            <a href="manageCards.do?form=allCardsForGroup&groupId=${group.id}">Manage Cards</a></td>
                         </td>
                     </tr>
                 </c:forEach>
@@ -173,14 +173,6 @@
         </table>
     </form>
 </c:if>
-
-<c:if test="${displayCards != null}">
-    <br />
-
-    <section id="pageButton"><a href="login.do"><-- Go to Home Page</a></section>
-</c:if>
-
-
 </div>
 
 <section id="pageButton"><a href="login.do"><-- Go to Home Page</a></section>

@@ -5,11 +5,9 @@
 package com.greenland.memorycards.repository;
 
 import com.greenland.memorycards.model.CardGroup;
-import com.greenland.memorycards.util.DateTimeConverter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

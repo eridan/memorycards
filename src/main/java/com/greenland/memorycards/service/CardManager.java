@@ -14,4 +14,6 @@ import java.util.List;
 public interface CardManager {
 
     List<Card> getAllCardsForGroup(int id);
+
+    public Card getCardWithId(int i);
 }

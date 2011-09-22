@@ -15,5 +15,7 @@ import java.util.List;
 public interface CardDao {
     
     public List<Card> getAllCardsForGroup(int id);
+
+    public Card getCardWithId(int cardId);
     
 }

@@ -30,5 +30,11 @@ public class CardManagerImpl implements CardManager{
 //        logger.info("Getting cards for group id: "+id);
         return cardDao.getAllCardsForGroup(id);
     }
+
+    @Override
+    public Card getCardWithId(int cardId) {
+        return cardDao.getCardWithId(cardId);
+    }
+    
     
 }

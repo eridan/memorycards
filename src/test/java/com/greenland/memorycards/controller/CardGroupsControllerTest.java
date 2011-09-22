@@ -124,10 +124,6 @@ public class CardGroupsControllerTest {
                 cardGroups.add(cardGroup1);
                 oneOf(cardGroupManager).getCardGroupsForUser("test@mail.ru");
                 will(returnValue(cardGroups));
-//                oneOf(cardGroupManager).getCardGroupWithId(1);
-//                will(returnValue(cardGroup));
-//                never(cardGroupManager).getCardGroupWithId(2);
-//                will(returnValue(cardGroup1));
             }
         });
 

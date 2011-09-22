@@ -5,6 +5,7 @@
 package com.greenland.memorycards.controller;
 
 import com.greenland.memorycards.model.Card;
+import com.greenland.memorycards.service.CardGroupManager;
 import com.greenland.memorycards.service.CardManager;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,10 +25,12 @@ import org.springframework.web.servlet.mvc.Controller;
  *
  * @author jurijspe
  */
-public class CardManagementController implements Controller{
+public class CardManagementController implements Controller {
+    
+    private static int groupId;
 
-    private int groupId;
     private CardManager cardManager;
+    private CardGroupManager cardGroupManager;
 
     public void setCardManager(CardManager cardManager) {
         this.cardManager = cardManager;
@@ -39,25 +42,60 @@ public class CardManagementController implements Controller{
             throws ServletException, IOException {
         logger.info("Card Management Controller");
 
-        // The below code smells. TODO: Refactor
-
         Map<String, Object> model = new HashMap<String, Object>();
-        boolean create = false;
-        boolean delete = false;
-        boolean update = false;
-
-        String actionName = "";
+        String parameterName = "";
         Enumeration e = request.getParameterNames();
         while (e.hasMoreElements()) {
-            actionName = (String) e.nextElement();
-            if (actionName.equalsIgnoreCase("manageCards")) {
-                groupId=Integer.valueOf(request.getParameter("manageCards"));
+            parameterName = (String) e.nextElement();
+            if (parameterName.equalsIgnoreCase("form")) {
+                displayForm(getFormName(request), request, model);
             }
         }
-
         List<Card> cardList = new ArrayList<Card>();
         cardList = cardManager.getAllCardsForGroup(groupId);
         model.put("cardList", cardList);
         return new ModelAndView("manageCards", "model", model);
+    }
+
+    private void setCardGroupId(HttpServletRequest request) {
+        String parameter = "";
+        Enumeration e = request.getParameterNames();
+        while (e.hasMoreElements()) {
+            parameter = (String) e.nextElement();
+            if (parameter.equalsIgnoreCase("groupId")) {
+                groupId = Integer.valueOf(request.getParameter("groupId"));
+            }
+        }
+    }
+
+    private void displayForm(String formName, HttpServletRequest request, Map<String, Object> model) {
+        if (formName.equals("allCardsForGroup")) {
+            setCardGroupId(request);
+        }
+        if (formName.equals("edit")) {
+            getCardToEdit(getCardId(request), model);
+        }
+    }
+
+    private String getFormName(HttpServletRequest request) {
+        return (String) request.getParameter("form");
+    }
+
+    private void getCardToEdit(int cardGroupId, Map<String, Object> model) {
+        System.out.println("Adding Edit card to the model");
+        model.put("cardToEdit", (Card)cardManager.getCardWithId(cardGroupId));
+    }
+
+    private int getCardId(HttpServletRequest request) {
+        int id = 0;
+        String parameter = "";
+        Enumeration e = request.getParameterNames();
+        while (e.hasMoreElements()) {
+            parameter = (String) e.nextElement();
+            if (parameter.equalsIgnoreCase("id")) {
+                id = Integer.valueOf(request.getParameter("id"));
+            }
+        }
+        return id;
     }
 }
