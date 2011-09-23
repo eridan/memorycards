@@ -103,8 +103,8 @@ public class CardManagementControllerTest {
         Assert.assertEquals("int 4", cardList.get(1).getAnswerCode());
         Assert.assertEquals("4", cardList.get(3).getAnswer());
     }
-    
-        @Test
+
+    @Test
     public void testShowCardToEdit() throws Exception {
 
         cardManagerMock.checking(new Expectations() {
@@ -136,6 +136,70 @@ public class CardManagementControllerTest {
         Assert.assertNotNull(card);
         Assert.assertEquals("2+2=?", card.getQuestion());
         Assert.assertEquals("4", card.getAnswer());
+        cardManagerMock.assertIsSatisfied();
+    }
+
+    @Test
+    public void testShowCardToDelete() throws Exception {
+
+        cardManagerMock.checking(new Expectations() {
+
+            {
+                Card card = new Card("2+2=?", "int 2+2", "4", "int 4", new Date(), new Date());
+                oneOf(cardManager).getCardWithId(1);
+                will(returnValue(card));
+            }
+        });
+
+        System.out.println("Testing if Card To Delete is shown");
+        request.setParameter("form", "delete");
+        request.setParameter("id", "1");
+        ModelAndView mav = controller.handleRequest(request, response);
+        Assert.assertEquals("manageCards", mav.getViewName());
+        Assert.assertNotNull(mav.getModel());
+        Map<String, Object> model = new HashMap<String, Object>();
+        model = (HashMap<String, Object>) mav.getModel().get("model");
+        List<Card> cardList = (ArrayList<Card>) model.get("cardList");
+        Assert.assertNotNull(cardList);
+        Assert.assertEquals(5, cardList.size());
+        Assert.assertEquals("2+2=?", cardList.get(0).getQuestion());
+        Assert.assertEquals("int 2+2", cardList.get(0).getQuestionCode());
+        Assert.assertEquals("int 4", cardList.get(1).getAnswerCode());
+        Assert.assertEquals("4", cardList.get(3).getAnswer());
+        Card card = new Card();
+        card = (Card) model.get("cardToEdit");
+        Assert.assertNull(card);
+        card = (Card) model.get("cardToDelete");
+        Assert.assertNotNull(card);
+        Assert.assertEquals("2+2=?", card.getQuestion());
+        Assert.assertEquals("4", card.getAnswer());
+        cardManagerMock.assertIsSatisfied();
+    }
+
+    @Test
+    public void testShowCardToCreate() throws Exception {
+
+        System.out.println("Testing if Card To Create is shown");
+        request.setParameter("form", "create");
+        ModelAndView mav = controller.handleRequest(request, response);
+        Assert.assertEquals("manageCards", mav.getViewName());
+        Assert.assertNotNull(mav.getModel());
+        Map<String, Object> model = new HashMap<String, Object>();
+        model = (HashMap<String, Object>) mav.getModel().get("model");
+        List<Card> cardList = (ArrayList<Card>) model.get("cardList");
+        Assert.assertNotNull(cardList);
+        Assert.assertEquals(5, cardList.size());
+        Assert.assertEquals("2+2=?", cardList.get(0).getQuestion());
+        Assert.assertEquals("int 2+2", cardList.get(0).getQuestionCode());
+        Assert.assertEquals("int 4", cardList.get(1).getAnswerCode());
+        Assert.assertEquals("4", cardList.get(3).getAnswer());
+        Card card = new Card();
+        card = (Card) model.get("cardToEdit");
+        Assert.assertNull(card);
+        card = (Card) model.get("cardToDelete");
+        Assert.assertNull(card);
+        card=(Card) model.get("cardToCreate");
+        assertNotNull(card);
         cardManagerMock.assertIsSatisfied();
     }
 }

@@ -75,19 +75,26 @@ public class CardManagementController implements Controller {
         if (formName.equals("edit")) {
             getCardToEdit(getCardId(request), model);
         }
+        if (formName.equals("delete")) {
+            getCardToDelete(getCardId(request), model);
+        }
+        if (formName.equals("create")) {
+            model.put("cardToCreate", new Card());
+        }
     }
 
     private String getFormName(HttpServletRequest request) {
         return (String) request.getParameter("form");
     }
 
-    private void getCardToEdit(int cardGroupId, Map<String, Object> model) {
+    private void getCardToEdit(int cardId, Map<String, Object> model) {
         System.out.println("Adding Edit card to the model");
-        model.put("cardToEdit", (Card)cardManager.getCardWithId(cardGroupId));
+        model.put("cardToEdit", (Card)cardManager.getCardWithId(cardId));
     }
 
     private int getCardId(HttpServletRequest request) {
         int id = 0;
+        int args []= new int [10];
         String parameter = "";
         Enumeration e = request.getParameterNames();
         while (e.hasMoreElements()) {
@@ -97,5 +104,10 @@ public class CardManagementController implements Controller {
             }
         }
         return id;
+    }
+
+    private void getCardToDelete(int cardId, Map<String, Object> model) {
+        System.out.println("Adding card to Delete to the model");
+        model.put("cardToDelete", (Card)cardManager.getCardWithId(cardId));
     }
 }
